@@ -110,13 +110,23 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 
 /***/ }),
 
+/***/ "./src/dom.js":
+/*!********************!*\
+  !*** ./src/dom.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createDOM: () => (/* binding */ createDOM)\n/* harmony export */ });\nconst projectTitle = document.querySelector(\".project-title\")\nconst taskList = document.querySelector(\".task-list\")\n\nconst allBtn = document.querySelector(\"#all-btn\")\nconst todayBtn = document.querySelector(\"#today-btn\")\nconst weekBtn = document.querySelector(\"#week-btn\")\n\nconst createDOM = () => {\n    displayAllTasks()\n}\n\nallBtn.addEventListener(\"click\", ()=> displayAllTasks())\ntodayBtn.addEventListener(\"click\", ()=> displayToday())\nweekBtn.addEventListener(\"click\", ()=> displayWeek())\n\nfunction displayAllTasks() {\n    projectTitle.textContent = \"All tasks\"\n}\n\nfunction displayToday() {\n    projectTitle.textContent = \"Today\"\n}\n\nfunction displayWeek() {\n    projectTitle.textContent = \"This week\"\n}\n\n//# sourceURL=webpack://todo-list/./src/dom.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./src/style.scss\");\n\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./src/style.scss\");\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom */ \"./src/dom.js\");\n\n\n\n(0,_dom__WEBPACK_IMPORTED_MODULE_1__.createDOM)()\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ })
 

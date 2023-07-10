@@ -13,9 +13,9 @@
             <nav class="left-panel">
                 <div class="home">
                     <h1>Home</h1>
-                    <button>All tasks</button>
-                    <button>Today</button>
-                    <button>This Week</button>
+                    <button id="all-btn">All tasks</button>
+                    <button id="today-btn">Today</button>
+                    <button id="week-btn">This Week</button>
                 </div>
                 <div class="projects">
                     <h1>Projects</h1>
@@ -24,9 +24,16 @@
                 </div>
             </nav>
             <div class="right-panel">
-                <h1 class="project-title">All tasks</h1>
-                <div class="task-list">
-                </div>
+                <h1 class="project-title"></h1>
+                <div class="task-list"></div>
+                
+                <form id="task-form">
+                    <label for="title">Title:</label><br>
+                    <input type="text" name="title" id="title" required><br>
+                    <label for="date">Due date:</label><br>
+                    <input type="text" name="date" id="date"><br>
+                    <button id="btn-submit" form="task-form" type="submit"> + Add task </button>
+                </form>
             </div>
         </main>
         <footer>footer</footer>
