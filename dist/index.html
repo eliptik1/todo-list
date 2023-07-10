@@ -7,7 +7,30 @@
     <title>Todo List</title>
 </head>
 <body>
-    <div id="content"></div>
+    <div id="content">
+        <header><h1>Todo List</h1></header>
+        <main>
+            <nav class="left-panel">
+                <div class="home">
+                    <h1>Home</h1>
+                    <button>All tasks</button>
+                    <button>Today</button>
+                    <button>This Week</button>
+                </div>
+                <div class="projects">
+                    <h1>Projects</h1>
+                    <div class="project-list"></div>
+                    <button> + Add project</button>
+                </div>
+            </nav>
+            <div class="right-panel">
+                <h1 class="project-title">All tasks</h1>
+                <div class="task-list">
+                </div>
+            </div>
+        </main>
+        <footer>footer</footer>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

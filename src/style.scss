@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+	padding: 0;
+    box-sizing: border-box;
+}
+header {
+    background-color: rgb(158, 173, 240);
+    padding: 2rem;
+}
+#content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    main {
+        display: flex;
+        height: 100%;
+        button {
+            width: 100%;
+            margin: 0.2rem;
+        }
+    }
+}
+.left-panel {
+    height: 100%;
+    width: 350px;
+    padding: 20px;
+    background-color: rgb(145, 149, 167);
+    
+}
+
+.right-panel {
+    flex: 1;
+    height: 100%;
+    padding: 20px;
+    background-color: rgb(192, 211, 255);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgb(94, 109, 152);
+}
