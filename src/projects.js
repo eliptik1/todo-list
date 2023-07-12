@@ -4,17 +4,33 @@ export const projects = (() => {
 
     let projectList = [];
     class Project {
-        constructor(title){
-            this["project title"] = title
+        constructor(title = "default"){
+            this.title = title
             this.tasks = []
         }
         addTask(title, date){
             const newTask = new Task(title, date)
-            myProject.tasks.push(newTask)
+            //if there is no any project yet, and you add a task, it creates "default" project and put the task in it.
+            if(projectList.length === 0){ 
+                myProject.tasks.push(newTask)
+                projectList.push(myProject)
+            } else {
+                projectList[0].tasks.push(newTask)
+            }
+            console.log(projectList)
+        }
+        addProject(title){
+            const newProject = new Project(title)
+            projectList.push(newProject)
+            console.log(projectList)
         }
     }
 
-    const myProject = new Project("default")
+    const myProject = new Project()
 
-    return {myProject, addTask: myProject.addTask}
+    return {
+        myProject, 
+        addTask: myProject.addTask, 
+        addProject:myProject.addProject
+    }
 })() 

@@ -31,10 +31,16 @@ function displayWeek() {
 const titleInput = document.querySelector("#title")
 const dateInput = document.querySelector("#date")
 
-const form = document.querySelector("#task-form")
-form.addEventListener("submit", (e)=> {
+const taskForm = document.querySelector("#task-form")
+taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addTask(titleInput.value, dateInput.value)
-    console.log(projects.myProject)
-    form.reset()
+    taskForm.reset()
+})
+//Add new project form
+const projectTitleInput = document.querySelector("#project-title")
+const projectForm = document.querySelector("#project-form")
+projectForm.addEventListener("submit", (e)=> {
+    e.preventDefault()
+    projects.addProject(projectTitleInput.value)
 })
