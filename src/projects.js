@@ -2,7 +2,7 @@ import { Task } from "./task";
 
 export const projects = (() => {
 
-    let projectList = [];
+    
     class Project {
         constructor(title = "default"){
             this.title = title
@@ -25,11 +25,12 @@ export const projects = (() => {
             console.log(projectList)
         }
     }
-
+    let projectList = [new Project("first-project"), new Project("second-project")];
     const myProject = new Project()
 
     return {
-        myProject, 
+        myProject,
+        projectList, 
         addTask: myProject.addTask, 
         addProject:myProject.addProject
     }
