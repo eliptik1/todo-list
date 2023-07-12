@@ -116,7 +116,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createDOM: () => (/* binding */ createDOM)\n/* harmony export */ });\nconst projectTitle = document.querySelector(\".project-title\")\nconst taskList = document.querySelector(\".task-list\")\n\nconst allBtn = document.querySelector(\"#all-btn\")\nconst todayBtn = document.querySelector(\"#today-btn\")\nconst weekBtn = document.querySelector(\"#week-btn\")\n\nconst createDOM = () => {\n    displayAllTasks()\n}\n\nallBtn.addEventListener(\"click\", ()=> displayAllTasks())\ntodayBtn.addEventListener(\"click\", ()=> displayToday())\nweekBtn.addEventListener(\"click\", ()=> displayWeek())\n\nfunction displayAllTasks() {\n    projectTitle.textContent = \"All tasks\"\n}\n\nfunction displayToday() {\n    projectTitle.textContent = \"Today\"\n}\n\nfunction displayWeek() {\n    projectTitle.textContent = \"This week\"\n}\n\n//# sourceURL=webpack://todo-list/./src/dom.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createDOM: () => (/* binding */ createDOM)\n/* harmony export */ });\n/* harmony import */ var _projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projects */ \"./src/projects.js\");\n\n\nconst projectTitle = document.querySelector(\".project-title\")\nconst taskList = document.querySelector(\".task-list\")\n\nconst allBtn = document.querySelector(\"#all-btn\")\nconst todayBtn = document.querySelector(\"#today-btn\")\nconst weekBtn = document.querySelector(\"#week-btn\")\n\nconst createDOM = () => {\n    displayAllTasks()\n}\n//Navbar buttons\nallBtn.addEventListener(\"click\", ()=> displayAllTasks())\ntodayBtn.addEventListener(\"click\", ()=> displayToday())\nweekBtn.addEventListener(\"click\", ()=> displayWeek())\n\nfunction displayAllTasks() {\n    projectTitle.textContent = \"All tasks\"\n}\n\nfunction displayToday() {\n    projectTitle.textContent = \"Today\"\n}\n\nfunction displayWeek() {\n    projectTitle.textContent = \"This week\"\n}\n\n//Add new task form\nconst titleInput = document.querySelector(\"#title\")\nconst dateInput = document.querySelector(\"#date\")\n\nconst form = document.querySelector(\"#task-form\")\nform.addEventListener(\"submit\", (e)=> {\n    e.preventDefault()\n    _projects__WEBPACK_IMPORTED_MODULE_0__.projects.addTask(titleInput.value, dateInput.value)\n    console.log(_projects__WEBPACK_IMPORTED_MODULE_0__.projects.myProject)\n    form.reset()\n})\n\n//# sourceURL=webpack://todo-list/./src/dom.js?");
 
 /***/ }),
 
@@ -127,6 +127,26 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./src/style.scss\");\n/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom */ \"./src/dom.js\");\n\n\n\n(0,_dom__WEBPACK_IMPORTED_MODULE_1__.createDOM)()\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/projects.js":
+/*!*************************!*\
+  !*** ./src/projects.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   projects: () => (/* binding */ projects)\n/* harmony export */ });\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n\n\nconst projects = (() => {\n\n    let projectList = [];\n    class Project {\n        constructor(title){\n            this[\"project title\"] = title\n            this.tasks = []\n        }\n        addTask(title, date){\n            const newTask = new _task__WEBPACK_IMPORTED_MODULE_0__.Task(title, date)\n            myProject.tasks.push(newTask)\n        }\n    }\n\n    const myProject = new Project(\"default\")\n\n    return {myProject, addTask: myProject.addTask}\n})() \n\n//# sourceURL=webpack://todo-list/./src/projects.js?");
+
+/***/ }),
+
+/***/ "./src/task.js":
+/*!*********************!*\
+  !*** ./src/task.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   Task: () => (/* binding */ Task)\n/* harmony export */ });\nclass Task {\n    constructor(title, date) {\n        this.title = title;\n        this.date = date;\n    }\n}\n\n//# sourceURL=webpack://todo-list/./src/task.js?");
 
 /***/ })
 
