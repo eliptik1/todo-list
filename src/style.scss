@@ -16,7 +16,7 @@ header {
         display: flex;
         height: 100%;
         button {
-            width: 100%;
+            padding: 0 0.5rem ;
             margin: 0.2rem;
         }
     }
@@ -26,7 +26,19 @@ header {
     width: 350px;
     padding: 20px;
     background-color: rgb(145, 149, 167);
-    
+    .home {
+        display: flex;
+        flex-direction: column;
+    }
+    .project-list {
+        background-color: rgb(180, 182, 198);
+        display: flex;
+        flex-direction: column;
+        .list-item-container {
+            display: flex;
+            justify-content: space-between; 
+        }
+    }
 }
 
 .right-panel {

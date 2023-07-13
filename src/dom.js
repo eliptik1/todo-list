@@ -27,11 +27,13 @@ function displayWeek() {
     projectTitle.textContent = "This week"
 }
 
-function renderProjects(title){
+function renderProjects(){
     const projectContainer = document.querySelector(".project-list")
     projectContainer.innerHTML = "" // clear existing projects display when calling the function more than once
     for(let i = 0; i < projects.projectList.length; i++){
-        projectContainer.innerHTML += `<button class="project"> ${projects.projectList[i].title}</button>`
+        projectContainer.innerHTML += `<div class="list-item-container">
+        <button class="project-btn"> ${projects.projectList[i].title}</button><button class="remove-btn">remove</button>
+        </div>`
     }
 } 
 
@@ -51,7 +53,7 @@ const projectForm = document.querySelector("#project-form")
 projectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addProject(projectTitleInput.value)
-    renderProjects(projectTitleInput.value)
+    renderProjects()
 })
 
 renderProjects() //Display the default projects in the projectList array when the page loads
