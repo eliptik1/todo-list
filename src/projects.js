@@ -24,6 +24,10 @@ export const projects = (() => {
             projectList.push(newProject)
             console.log(projectList)
         }
+        removeProject(index){
+            projectList.splice(index, 1)
+            console.log(projectList)
+        }
     }
     let projectList = [new Project("first-project"), new Project("second-project")];
     const myProject = new Project()
@@ -32,6 +36,7 @@ export const projects = (() => {
         myProject,
         projectList, 
         addTask: myProject.addTask, 
-        addProject:myProject.addProject
+        addProject:myProject.addProject,
+        removeProject: myProject.removeProject
     }
 })() 

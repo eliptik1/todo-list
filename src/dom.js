@@ -35,6 +35,16 @@ function renderProjects(){
         <button class="project-btn"> ${projects.projectList[i].title}</button><button class="remove-btn">remove</button>
         </div>`
     }
+    //Remove projects
+    const projectRemoveButtons = document.querySelectorAll(".remove-btn")
+    projectRemoveButtons.forEach((btn, index) => {
+        btn.addEventListener("click", (e)=>{
+            projects.removeProject(index)
+            let projectListItem = e.target.closest(".list-item-container") // Find the btn's container element: ".list-item-container"
+            projectListItem.remove()
+            renderProjects()
+        })
+    })
 } 
 
 //Add new task form
@@ -46,6 +56,7 @@ taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addTask(titleInput.value, dateInput.value)
     taskForm.reset()
+    renderProjects()
 })
 //Add new project form
 const projectTitleInput = document.querySelector("#project-title")
