@@ -14,8 +14,10 @@ export const projects = (() => {
             if(projectList.length === 0){ 
                 this.addProject("default")
                 projectList[0].tasks.push(newTask)
+                console.log(projectList[0].tasks)
             } else {
                 projectList[0].tasks.push(newTask)
+                console.log(projectList[0].tasks)
             }
             console.log(projectList)
         }
@@ -28,6 +30,10 @@ export const projects = (() => {
             projectList.splice(index, 1)
             console.log(projectList)
         }
+        removeTask(index){
+            projectList[0].tasks.splice(index, 1)
+            console.log(projectList[0].tasks)
+        }
     }
     let projectList = [new Project("first-project"), new Project("second-project")];
     const myProject = new Project()
@@ -37,6 +43,7 @@ export const projects = (() => {
         projectList, 
         addTask: myProject.addTask, 
         addProject:myProject.addProject,
-        removeProject: myProject.removeProject
+        removeProject: myProject.removeProject,
+        removeTask: myProject.removeTask
     }
 })() 

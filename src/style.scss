@@ -46,6 +46,12 @@ header {
     height: 100%;
     padding: 20px;
     background-color: rgb(192, 211, 255);
+    .task-item-container {
+        display: flex;
+        justify-content: space-between; 
+        background-color: rgb(180, 182, 198);
+        margin-bottom: 0.3rem;
+    }
 }
 
 footer {

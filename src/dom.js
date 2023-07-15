@@ -43,9 +43,31 @@ function renderProjects(){
             let projectListItem = e.target.closest(".list-item-container") // Find the btn's container element: ".list-item-container"
             projectListItem.remove()
             renderProjects()
+            renderTasks()
         })
     })
 } 
+
+function renderTasks(){
+    const taskContainer = document.querySelector(".task-list")
+    taskContainer.innerHTML = "" // clear existing tasks display when calling the function more than once
+    if(projects.projectList.length === 0) return //if all projects were removed, then don't try to iterate over non-existent tasks
+    for(let i = 0; i < projects.projectList[0].tasks.length; i++){
+        taskContainer.innerHTML += `<div class="task-item-container">
+        <button class="task-btn"> ${projects.projectList[0].tasks[i].title}</button><button class="remove-task-btn">remove</button>
+        </div>`
+    }
+    //Remove tasks
+    const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")
+    taskRemoveButtons.forEach((btn, index) => {
+        btn.addEventListener("click", (e)=>{
+            projects.removeTask(index)
+            let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".list-item-container"
+            projectListItem2.remove()
+            renderTasks()
+        })
+    })
+}
 
 //Add new task form
 const titleInput = document.querySelector("#title")
@@ -57,6 +79,7 @@ taskForm.addEventListener("submit", (e)=> {
     projects.addTask(titleInput.value, dateInput.value)
     taskForm.reset()
     renderProjects()
+    renderTasks()
 })
 //Add new project form
 const projectTitleInput = document.querySelector("#project-title")
@@ -65,6 +88,7 @@ projectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addProject(projectTitleInput.value)
     renderProjects()
+    renderTasks()
 })
 
 renderProjects() //Display the default projects in the projectList array when the page loads
