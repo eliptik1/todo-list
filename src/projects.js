@@ -12,8 +12,8 @@ export const projects = (() => {
             const newTask = new Task(title, date)
             //if there is no any project yet, and you add a task, it creates "default" project and put the task in it.
             if(projectList.length === 0){ 
-                myProject.tasks.push(newTask)
-                projectList.push(myProject)
+                this.addProject("default")
+                projectList[0].tasks.push(newTask)
             } else {
                 projectList[0].tasks.push(newTask)
             }
