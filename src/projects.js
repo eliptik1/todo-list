@@ -4,11 +4,11 @@ export const projects = (() => {
 
     
     class Project {
-        constructor(title = "default"){
+        constructor(title){
             this.title = title
             this.tasks = []
         }
-        addTask(title, date){
+        addTask(title, date, projectIndex){
             const newTask = new Task(title, date)
             //if there is no any project yet, and you add a task, it creates "default" project and put the task in it.
             if(projectList.length === 0){ 
@@ -16,8 +16,8 @@ export const projects = (() => {
                 projectList[0].tasks.push(newTask)
                 console.log(projectList[0].tasks)
             } else {
-                projectList[0].tasks.push(newTask)
-                console.log(projectList[0].tasks)
+                projectList[projectIndex].tasks.push(newTask)
+                console.log(projectList[projectIndex].tasks)
             }
             console.log(projectList)
         }
@@ -30,13 +30,17 @@ export const projects = (() => {
             projectList.splice(index, 1)
             console.log(projectList)
         }
-        removeTask(index){
-            projectList[0].tasks.splice(index, 1)
-            console.log(projectList[0].tasks)
+        removeTask(projectIndex, taskIndex){
+            projectList[projectIndex].tasks.splice(taskIndex, 1)
+            console.log(projectList[projectIndex].tasks)
         }
     }
-    let projectList = [new Project("first-project"), new Project("second-project")];
+    let projectList = [new Project("first-project"), new Project("second-project"), new Project("third-project"),new Project("fourth-project")];
     const myProject = new Project()
+    projectList[0].tasks.push({title: "first"})
+    projectList[1].tasks.push({title: "second"})
+    projectList[2].tasks.push({title: "third"})
+    projectList[3].tasks.push({title: "fourth"})
 
     return {
         myProject,
