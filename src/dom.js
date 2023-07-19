@@ -16,6 +16,10 @@ weekBtn.addEventListener("click", ()=> displayWeek())
 
 function displayAllTasks() {
     projectTitle.textContent = "All tasks"
+    renderTasks("allTasks")
+    selectProject("allTasks")
+    console.log(projects.projectList)
+    taskForm.classList.add("hidden")
 }
 
 function displayToday() {
@@ -30,6 +34,7 @@ function displayWeek() {
 let selectedProjectIndex = 0
 function selectProject(index){
     selectedProjectIndex = index
+    taskForm.classList.remove("hidden")
 }
 
 function renderProjects(){
@@ -48,6 +53,9 @@ function renderProjects(){
             let projectListItem = e.target.closest(".list-item-container") // Find the btn's container element: ".list-item-container"
             projectListItem.remove()
             renderProjects()
+            if(selectedProjectIndex === "allTasks") {
+                renderTasks("allTasks")
+            }
             if(selectedProjectIndex > index) { //if you select a project and remove the one that comes before it, display the same selected project
                 renderTasks(selectedProjectIndex-1)
                 selectProject(selectedProjectIndex-1)
@@ -61,13 +69,15 @@ function renderProjects(){
                 renderTasks(index-1)
                 selectProject(index-1)
             }
+            if(projectRemoveButtons.length-1 === 0) { //if you remove all projects, display "all tasks" tab
+                displayAllTasks()
+            }
         })
     })
     //View selected project
     const selectProjectButtons = document.querySelectorAll(".project-btn")
     selectProjectButtons.forEach((btn, index)=> {
         btn.addEventListener("click", () => {
-            console.log(btn.textContent)
             selectProject(index)
             renderTasks(selectedProjectIndex)
         })
@@ -78,21 +88,41 @@ function renderTasks(projectIndex){
     const taskContainer = document.querySelector(".task-list")
     taskContainer.innerHTML = "" // clear existing tasks display when calling the function more than once
     if(projects.projectList.length === 0) return //if all projects were removed, then don't try to iterate over non-existent tasks
-    projectTitle.textContent = projects.projectList[projectIndex].title
-
-    for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
-        taskContainer.innerHTML += `<div class="task-item-container">
-        <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button><button class="remove-task-btn">remove</button>
-        </div>`
+    //If "All tasks" are selected, render all tasks with data attributes to keep the tasks' order when deleting them.
+    if(projectIndex === "allTasks") {
+        for(let i=0; i < projects.projectList.length; i++){
+            for(let j=0; j < projects.projectList[i].tasks.length; j++) {
+                taskContainer.innerHTML += 
+                `<div class="task-item-container" 
+                    data-parent-project-index = ${projects.projectList[i].tasks[j].parentProjectIndex} 
+                    data-task-index = ${j}>
+                    <button class="task-btn"> ${projects.projectList[i].tasks[j].title}</button>
+                    <button class="remove-task-btn">remove</button>
+                </div>`
+            }
+        }
+    } else {
+        projectTitle.textContent = projects.projectList[projectIndex].title
+        for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
+        taskContainer.innerHTML += 
+            `<div class="task-item-container">
+            <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button><button class="remove-task-btn">remove</button>
+            </div>`
+        }
     }
     //Remove tasks
     const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")
     taskRemoveButtons.forEach((btn, taskIndex) => {
         btn.addEventListener("click", (e)=>{
-            projects.removeTask(selectedProjectIndex, taskIndex)
             let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".list-item-container"
+            //If you remove a task from "All tasks", use data attributes to modify the projectList. 
+            if(projectIndex === "allTasks") { 
+                projects.removeTask("allTasks", projectListItem2.dataset.taskIndex, projectListItem2.dataset.parentProjectIndex) 
+                renderTasks("allTasks")
+            } else {
+                projects.removeTask(selectedProjectIndex, taskIndex)
+            }
             projectListItem2.remove()
-            renderTasks(selectedProjectIndex)
         })
     })
 }
