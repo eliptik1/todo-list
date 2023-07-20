@@ -97,7 +97,10 @@ function renderTasks(projectIndex){
                     data-parent-project-index = ${projects.projectList[i].tasks[j].parentProjectIndex} 
                     data-task-index = ${j}>
                     <button class="task-btn"> ${projects.projectList[i].tasks[j].title}</button>
-                    <button class="remove-task-btn">remove</button>
+                    <div>
+                        <button class="task-date">${projects.projectList[i].tasks[j].date}</button>
+                        <button class="remove-task-btn">remove</button>
+                    </div>
                 </div>`
             }
         }
@@ -106,7 +109,11 @@ function renderTasks(projectIndex){
         for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
         taskContainer.innerHTML += 
             `<div class="task-item-container">
-            <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button><button class="remove-task-btn">remove</button>
+            <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button>
+            <div>
+                <button class="task-date">${projects.projectList[projectIndex].tasks[i].date}</button>
+                <button class="remove-task-btn">remove</button>
+            </div>
             </div>`
         }
     }
@@ -134,7 +141,12 @@ const dateInput = document.querySelector("#date")
 const taskForm = document.querySelector("#task-form")
 taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
-    projects.addTask(titleInput.value, dateInput.value, selectedProjectIndex)
+    //if user doesn't specify a date, set it to "no date", else, use the dateInput's value
+    let taskDate = dateInput.value;
+    if (taskDate === "") {
+        taskDate = "no date";
+    }
+    projects.addTask(titleInput.value, taskDate, selectedProjectIndex)
     taskForm.reset()
     renderProjects()
     renderTasks(selectedProjectIndex)
