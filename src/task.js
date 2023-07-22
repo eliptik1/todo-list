@@ -1,5 +1,5 @@
 export class Task {
-    constructor(title, date) {
+    constructor(title, date="no date") {
         this.title = title;
         this.date = date;
     }

@@ -18,7 +18,6 @@ function displayAllTasks() {
     projectTitle.textContent = "All tasks"
     renderTasks("allTasks")
     selectProject("allTasks")
-    console.log(projects.projectList)
     taskForm.classList.add("hidden")
 }
 
@@ -90,25 +89,25 @@ function renderTasks(projectIndex){
     if(projects.projectList.length === 0) return //if all projects were removed, then don't try to iterate over non-existent tasks
     //If "All tasks" are selected, render all tasks with data attributes to keep the tasks' order when deleting them.
     if(projectIndex === "allTasks") {
-        for(let i=0; i < projects.projectList.length; i++){
-            for(let j=0; j < projects.projectList[i].tasks.length; j++) {
+        for(let i=0; i < projects.allTasks.length; i++){
                 taskContainer.innerHTML += 
                 `<div class="task-item-container" 
-                    data-parent-project-index = ${projects.projectList[i].tasks[j].parentProjectIndex} 
-                    data-task-index = ${j}>
-                    <button class="task-btn"> ${projects.projectList[i].tasks[j].title}</button>
+                    data-parent-project-index = ${projects.allTasks[i].parentProjectIndex} 
+                    data-task-index = ${projects.allTasks[i].taskIndex}>
+                    <button class="task-btn"> ${projects.allTasks[i].title}</button>
                     <div>
-                        <button class="task-date">${projects.projectList[i].tasks[j].date}</button>
+                        <button class="task-date">${projects.allTasks[i].date}</button>
                         <button class="remove-task-btn">remove</button>
                     </div>
                 </div>`
-            }
         }
     } else {
         projectTitle.textContent = projects.projectList[projectIndex].title
         for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
         taskContainer.innerHTML += 
-            `<div class="task-item-container">
+            `<div class="task-item-container"
+                data-parent-project-index = ${projects.projectList[projectIndex].tasks[i].parentProjectIndex} 
+                data-task-index = ${projects.projectList[projectIndex].tasks[i].taskIndex}>
             <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button>
             <div>
                 <button class="task-date">${projects.projectList[projectIndex].tasks[i].date}</button>
@@ -119,15 +118,15 @@ function renderTasks(projectIndex){
     }
     //Remove tasks
     const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")
-    taskRemoveButtons.forEach((btn, taskIndex) => {
+    taskRemoveButtons.forEach( btn => {
         btn.addEventListener("click", (e)=>{
             let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".list-item-container"
-            //If you remove a task from "All tasks", use data attributes to modify the projectList. 
+            //use data attributes to modify the projectList. 
+            projects.removeTask(projectListItem2.dataset.taskIndex, projectListItem2.dataset.parentProjectIndex) 
             if(projectIndex === "allTasks") { 
-                projects.removeTask("allTasks", projectListItem2.dataset.taskIndex, projectListItem2.dataset.parentProjectIndex) 
                 renderTasks("allTasks")
             } else {
-                projects.removeTask(selectedProjectIndex, taskIndex)
+                renderTasks(selectedProjectIndex)
             }
             projectListItem2.remove()
         })
