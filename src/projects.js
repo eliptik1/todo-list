@@ -13,6 +13,9 @@ export const projects = (() => {
             //Assign each task their parent project's index & task index
             projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
             projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
+            projectList[0].tasks.sort((a,b)=>a.date < b.date ? -1 : 1)
+
+            
         }
         addProject(title){
             const newProject = new Project(title)
@@ -42,10 +45,11 @@ export const projects = (() => {
     //Assign each task their parent project's index & task index
     projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
     projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
-
     //Combine all tasks from all projects in the projectList array into a single array
-    let getAllTasks = () => projectList.reduce((acc, project)=> acc.concat(project.tasks), []) 
-
+    let getAllTasks = () => {
+        const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
+        return allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
+    } 
     return {
         myProject,
         projectList,
