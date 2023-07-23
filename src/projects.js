@@ -1,4 +1,5 @@
 import { Task } from "./task";
+import { format } from "date-fns"
 
 export const projects = (() => {
 
@@ -49,11 +50,22 @@ export const projects = (() => {
     let getAllTasks = () => {
         const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
         return allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
-    } 
+    }
+    let getTodayTasks = () => {
+        const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
+        allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
+        return allTasks.filter(task => task.date === today)
+    }
+    
+    //Date variables
+    const date = new Date()
+    const today = format(date, 'yyyy-MM-dd')
+
     return {
         myProject,
         projectList,
         get allTasks() { return getAllTasks() },
+        get todayTasks() { return getTodayTasks() },
         addTask: myProject.addTask, 
         addProject:myProject.addProject,
         removeProject: myProject.removeProject,

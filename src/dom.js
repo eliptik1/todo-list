@@ -23,6 +23,9 @@ function displayAllTasks() {
 
 function displayToday() {
     projectTitle.textContent = "Today"
+    renderTasks("today")
+    selectProject("today")
+    taskForm.classList.add("hidden")
 }
 
 function displayWeek() {
@@ -54,6 +57,8 @@ function renderProjects(){
             renderProjects()
             if(selectedProjectIndex === "allTasks") {
                 renderTasks("allTasks")
+            } else if(selectedProjectIndex === "today") {
+                renderTasks("today")
             }
             if(selectedProjectIndex > index) { //if you select a project and remove the one that comes before it, display the same selected project
                 renderTasks(selectedProjectIndex-1)
@@ -101,7 +106,21 @@ function renderTasks(projectIndex){
                     </div>
                 </div>`
         }
-    } else {
+    } else if(projectIndex === "today"){
+        for(let i=0; i < projects.todayTasks.length; i++){
+            taskContainer.innerHTML += 
+            `<div class="task-item-container" 
+                data-parent-project-index = ${projects.todayTasks[i].parentProjectIndex} 
+                data-task-index = ${projects.todayTasks[i].taskIndex}>
+                <button class="task-btn"> ${projects.todayTasks[i].title}</button>
+                <div>
+                    <button class="task-date">${projects.todayTasks[i].date}</button>
+                    <button class="remove-task-btn">remove</button>
+                </div>
+            </div>`
+    }
+    }
+    else {
         projectTitle.textContent = projects.projectList[projectIndex].title
         for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
         taskContainer.innerHTML += 
