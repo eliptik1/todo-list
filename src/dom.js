@@ -1,6 +1,5 @@
 import { projects } from "./projects"
 const projectTitle = document.querySelector(".project-title")
-const taskList = document.querySelector(".task-list")
 
 const allBtn = document.querySelector("#all-btn")
 const todayBtn = document.querySelector("#today-btn")
@@ -10,28 +9,14 @@ export const createDOM = () => {
     renderTasks(selectedProjectIndex)
 }
 //Navbar buttons
-allBtn.addEventListener("click", ()=> displayAllTasks())
-todayBtn.addEventListener("click", ()=> displayToday())
-weekBtn.addEventListener("click", ()=> displayWeek())
+allBtn.addEventListener("click", ()=> displayTab("allTasks", "All tasks"))
+todayBtn.addEventListener("click", ()=> displayTab("today", "Today"))
+weekBtn.addEventListener("click", ()=> displayTab("week", "This week"))
 
-function displayAllTasks() {
-    projectTitle.textContent = "All tasks"
-    renderTasks("allTasks")
-    selectProject("allTasks")
-    taskForm.classList.add("hidden")
-}
-
-function displayToday() {
-    projectTitle.textContent = "Today"
-    renderTasks("today")
-    selectProject("today")
-    taskForm.classList.add("hidden")
-}
-
-function displayWeek() {
-    projectTitle.textContent = "This week"
-    renderTasks("week")
-    selectProject("week")
+function displayTab(tabName, tabTitle){
+    projectTitle.textContent = tabTitle
+    renderTasks(tabName)
+    selectProject(tabName)
     taskForm.classList.add("hidden")
 }
 
@@ -79,7 +64,7 @@ function renderProjects(){
                 selectProject(index-1)
             }
             if(projectRemoveButtons.length-1 === 0) { //if you remove all projects, display "all tasks" tab
-                displayAllTasks()
+                displayTab("allTasks", "All tasks")
             }
         })
     })
@@ -97,61 +82,30 @@ function renderTasks(projectIndex){
     const taskContainer = document.querySelector(".task-list")
     taskContainer.innerHTML = "" // clear existing tasks display when calling the function more than once
     if(projects.projectList.length === 0) return //if all projects were removed, then don't try to iterate over non-existent tasks
-    //If "All tasks" are selected, render all tasks with data attributes to keep the tasks' order when deleting them.
-    if(projectIndex === "allTasks") {
-        for(let i=0; i < projects.allTasks.length; i++){
-                taskContainer.innerHTML += 
-                `<div class="task-item-container" 
-                    data-parent-project-index = ${projects.allTasks[i].parentProjectIndex} 
-                    data-task-index = ${projects.allTasks[i].taskIndex}>
-                    <button class="task-btn"> ${projects.allTasks[i].title}</button>
-                    <div>
-                        <button class="task-date">${projects.allTasks[i].date}</button>
-                        <button class="remove-task-btn">remove</button>
-                    </div>
-                </div>`
-        }
-    } else if(projectIndex === "today"){
-        for(let i=0; i < projects.todayTasks.length; i++){
+    function render(tabArray){
+        for(let i=0; i < tabArray.length; i++){
             taskContainer.innerHTML += 
             `<div class="task-item-container" 
-                data-parent-project-index = ${projects.todayTasks[i].parentProjectIndex} 
-                data-task-index = ${projects.todayTasks[i].taskIndex}>
-                <button class="task-btn"> ${projects.todayTasks[i].title}</button>
+            data-parent-project-index = ${tabArray[i].parentProjectIndex} 
+            data-task-index = ${tabArray[i].taskIndex}>
+                <button class="task-btn"> ${tabArray[i].title}</button>
                 <div>
-                    <button class="task-date">${projects.todayTasks[i].date}</button>
-                    <button class="remove-task-btn">remove</button>
-                </div>
-            </div>`
-        } 
-    } else if(projectIndex === "week"){
-        for(let i=0; i < projects.weekTasks.length; i++){
-            taskContainer.innerHTML += 
-            `<div class="task-item-container" 
-                data-parent-project-index = ${projects.weekTasks[i].parentProjectIndex} 
-                data-task-index = ${projects.weekTasks[i].taskIndex}>
-                <button class="task-btn"> ${projects.weekTasks[i].title}</button>
-                <div>
-                    <button class="task-date">${projects.weekTasks[i].date}</button>
+                    <button class="task-date">${tabArray[i].date}</button>
                     <button class="remove-task-btn">remove</button>
                 </div>
             </div>`
         }
     }
-    else {
+    //If "All tasks" are selected, render all tasks with data attributes to keep the tasks' order when deleting them.
+    if(projectIndex === "allTasks") {
+        render(projects.allTasks)
+    } else if(projectIndex === "today"){
+        render(projects.todayTasks)
+    } else if(projectIndex === "week"){
+        render(projects.weekTasks)
+    } else {
         projectTitle.textContent = projects.projectList[projectIndex].title
-        for(let i = 0; i < projects.projectList[projectIndex].tasks.length; i++){
-        taskContainer.innerHTML += 
-            `<div class="task-item-container"
-                data-parent-project-index = ${projects.projectList[projectIndex].tasks[i].parentProjectIndex} 
-                data-task-index = ${projects.projectList[projectIndex].tasks[i].taskIndex}>
-            <button class="task-btn"> ${projects.projectList[projectIndex].tasks[i].title}</button>
-            <div>
-                <button class="task-date">${projects.projectList[projectIndex].tasks[i].date}</button>
-                <button class="remove-task-btn">remove</button>
-            </div>
-            </div>`
-        }
+        render(projects.projectList[projectIndex].tasks)
     }
     //Remove tasks
     const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")

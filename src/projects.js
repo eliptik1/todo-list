@@ -13,8 +13,7 @@ export const projects = (() => {
             projectList[projectIndex].tasks.push(newTask)
             //Assign each task their parent project's index & task index
             projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
-            projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
-            projectList[0].tasks.sort((a,b)=>a.date < b.date ? -1 : 1)          
+            projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))         
         }
         addProject(title){
             const newProject = new Project(title)
@@ -50,14 +49,10 @@ export const projects = (() => {
         return allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
     }
     let getTodayTasks = () => {
-        const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
-        allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
-        return allTasks.filter(task => task.date === today)
+        return getAllTasks().filter(task => task.date === today)
     }
     let getWeekTasks = () => {
-        const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
-        allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
-        return allTasks.filter(task => isThisWeek(parseISO(task.date)))
+        return getAllTasks().filter(task => isThisWeek(parseISO(task.date)))
     }
     
     //Date variables
