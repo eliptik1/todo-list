@@ -29,6 +29,9 @@ export const projects = (() => {
             //Re-assign each task index after removing a task
             projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
         }
+        editProject(index, newTitle){
+            projectList[index].title = newTitle
+        }
     }
 
     //Default projects and tasks
@@ -68,6 +71,7 @@ export const projects = (() => {
         addTask: myProject.addTask, 
         addProject:myProject.addProject,
         removeProject: myProject.removeProject,
-        removeTask: myProject.removeTask
+        removeTask: myProject.removeTask,
+        editProject:myProject.editProject,
     }
 })() 

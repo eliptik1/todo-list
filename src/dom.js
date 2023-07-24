@@ -31,8 +31,13 @@ function renderProjects(){
     const projectContainer = document.querySelector(".project-list")
     projectContainer.innerHTML = "" // clear existing projects display when calling the function more than once
     for(let i = 0; i < projects.projectList.length; i++){
-        projectContainer.innerHTML += `<div class="list-item-container">
-        <button class="project-btn"> ${projects.projectList[i].title}</button><button class="remove-btn">remove</button>
+        projectContainer.innerHTML += 
+        `<div class="list-item-container" data-project-index = ${i} >
+        <button class="project-btn"> ${projects.projectList[i].title}</button>
+        <div class="edit-container">
+            <button class="edit-btn">edit</button>
+            <button class="remove-btn">remove</button>
+        </div>
         </div>`
     }
     //Remove projects
@@ -74,6 +79,20 @@ function renderProjects(){
         btn.addEventListener("click", () => {
             selectProject(index)
             renderTasks(selectedProjectIndex)
+        })
+    })
+    //Edit project title
+    const editProjectButtons = document.querySelectorAll(".edit-btn")
+    const projectListItems = document.querySelectorAll(".list-item-container")
+    editProjectButtons.forEach((btn, index)=> {
+        btn.addEventListener("click", (e) => {
+            editProjectForm.classList.remove("hidden")
+            let projectListItem = e.target.closest(".list-item-container")
+            //clear active classes for the purpose of selecting only one list item
+            projectListItems.forEach(item => item.classList.remove("edit-active")) 
+            projectListItem.classList.add("edit-active")
+            projectEditTitleInput.value = projects.projectList[index].title
+            projectEditTitleInput.focus()
         })
     })
 } 
@@ -147,8 +166,33 @@ const projectForm = document.querySelector("#project-form")
 projectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addProject(projectTitleInput.value)
+    projectTitleInput.value = ""
     renderProjects()
     renderTasks(selectedProjectIndex)
 })
+
+//Edit project form
+const editProjectForm = document.querySelector("#project-edit-form")
+editProjectForm.classList.add("hidden") //hide form when the page loads
+const projectEditTitleInput = document.querySelector("#project-edit-title")
+const cancelBtn = document.querySelector("#form-btn-cancel")
+editProjectForm.addEventListener("submit", (e)=> {
+    e.preventDefault()
+    const selectedItem = document.querySelector(".edit-active")
+    if(selectedItem) {
+        projects.editProject(selectedItem.dataset.projectIndex, projectEditTitleInput.value)
+        renderProjects()
+        projectEditTitleInput.value = ""
+    }
+    editProjectForm.classList.add("hidden")
+})
+cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    projectEditTitleInput.value = ""
+    const projectListItems = document.querySelectorAll(".list-item-container")
+    projectListItems.forEach(item => item.classList.remove("edit-active"))
+    editProjectForm.classList.add("hidden")
+})
+
 
 renderProjects() //Display the default projects in the projectList array when the page loads

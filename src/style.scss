@@ -38,6 +38,12 @@ header {
             display: flex;
             justify-content: space-between; 
         }
+        .edit-container {
+            display: flex;
+        }
+        .edit-active {
+            background-color: rgb(106, 126, 255);
+        }
     }
 }
 
