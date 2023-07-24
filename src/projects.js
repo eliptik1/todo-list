@@ -32,6 +32,10 @@ export const projects = (() => {
         editProject(index, newTitle){
             projectList[index].title = newTitle
         }
+        editTask(projectIndex, taskIndex, newTitle, newDate){
+            projectList[projectIndex].tasks[taskIndex].title = newTitle
+            projectList[projectIndex].tasks[taskIndex].date = newDate
+        }
     }
 
     //Default projects and tasks
@@ -73,5 +77,6 @@ export const projects = (() => {
         removeProject: myProject.removeProject,
         removeTask: myProject.removeTask,
         editProject:myProject.editProject,
+        editTask: myProject.editTask
     }
 })() 

@@ -109,6 +109,7 @@ function renderTasks(projectIndex){
             data-task-index = ${tabArray[i].taskIndex}>
                 <button class="task-btn"> ${tabArray[i].title}</button>
                 <div>
+                    <button class="task-edit-btn">edit</button>
                     <button class="task-date">${tabArray[i].date}</button>
                     <button class="remove-task-btn">remove</button>
                 </div>
@@ -139,6 +140,24 @@ function renderTasks(projectIndex){
                 renderTasks(selectedProjectIndex)
             }
             projectListItem2.remove()
+        })
+    })
+    //Edit task
+    const editTaskButtons = document.querySelectorAll(".task-edit-btn")
+    const taskListItems = document.querySelectorAll(".task-item-container")
+    editTaskButtons.forEach((btn, index)=> {
+        btn.addEventListener("click", (e) => {
+            editTaskForm.classList.remove("hidden")
+            let taskListItem = e.target.closest(".task-item-container")
+            //clear active classes for the purpose of selecting only one list item
+            taskListItems.forEach(item => item.classList.remove("task-edit-active")) 
+            taskListItem.classList.add("task-edit-active")
+        //editProjectForm.classList.remove("hidden")            
+            taskEditTitleInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title
+            projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date == "no date" ? 
+                taskEditDateInput.value = "" : 
+                taskEditDateInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date
+            taskEditTitleInput.focus() 
         })
     })
 }
@@ -172,9 +191,9 @@ projectForm.addEventListener("submit", (e)=> {
 })
 
 //Edit project form
-const editProjectForm = document.querySelector("#project-edit-form")
+const editProjectForm = document.querySelector("#edit-project-form")
 editProjectForm.classList.add("hidden") //hide form when the page loads
-const projectEditTitleInput = document.querySelector("#project-edit-title")
+const projectEditTitleInput = document.querySelector("#edit-project-title")
 const cancelBtn = document.querySelector("#form-btn-cancel")
 editProjectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
@@ -182,6 +201,7 @@ editProjectForm.addEventListener("submit", (e)=> {
     if(selectedItem) {
         projects.editProject(selectedItem.dataset.projectIndex, projectEditTitleInput.value)
         renderProjects()
+        renderTasks(selectedProjectIndex)
         projectEditTitleInput.value = ""
     }
     editProjectForm.classList.add("hidden")
@@ -194,5 +214,30 @@ cancelBtn.addEventListener("click", (e) => {
     editProjectForm.classList.add("hidden")
 })
 
+//Edit task form
+const editTaskForm = document.querySelector("#edit-task-form")
+editTaskForm.classList.add("hidden") //hide form when the page loads
+const taskEditTitleInput = document.querySelector("#edit-task-title")
+const taskEditDateInput = document.querySelector("#edit-date")
+const taskCancelBtn = document.querySelector("#task-form-btn-cancel")
+editTaskForm.addEventListener("submit", (e)=> {
+    e.preventDefault()
+    let newDate = taskEditDateInput.value;
+    (newDate === "") ? newDate = "no date" : newDate = taskEditDateInput.value
+    const selectedItem = document.querySelector(".task-edit-active")
+    if(selectedItem) {
+        projects.editTask(selectedItem.dataset.parentProjectIndex, selectedItem.dataset.taskIndex, taskEditTitleInput.value, newDate)
+        renderProjects()
+        renderTasks(selectedProjectIndex)
+    }
+    editTaskForm.classList.add("hidden")
+    editTaskForm.reset()
+    taskCancelBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+        const taskListItems = document.querySelectorAll(".task-item-container")
+        taskListItems.forEach(item => item.classList.remove("task-edit-active"))
+        editTaskForm.classList.add("hidden")
+    })
+})
 
 renderProjects() //Display the default projects in the projectList array when the page loads
