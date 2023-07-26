@@ -36,6 +36,11 @@ export const projects = (() => {
             projectList[projectIndex].tasks[taskIndex].title = newTitle
             projectList[projectIndex].tasks[taskIndex].date = newDate
         }
+        checkTask(projectIndex, taskIndex){
+            projectList[projectIndex].tasks[taskIndex].checked === false ? 
+                projectList[projectIndex].tasks[taskIndex].checked = true :
+                projectList[projectIndex].tasks[taskIndex].checked = false
+        }
     }
 
     //Default projects and tasks
@@ -77,6 +82,7 @@ export const projects = (() => {
         removeProject: myProject.removeProject,
         removeTask: myProject.removeTask,
         editProject:myProject.editProject,
-        editTask: myProject.editTask
+        editTask: myProject.editTask,
+        checkTask: myProject.checkTask
     }
 })() 

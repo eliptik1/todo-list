@@ -108,10 +108,13 @@ function renderTasks(projectIndex){
             `<div class="task-item-container" 
             data-parent-project-index = ${tabArray[i].parentProjectIndex} 
             data-task-index = ${tabArray[i].taskIndex}>
-                <button class="task-btn"> ${tabArray[i].title}</button>
                 <div>
-                    <button class="task-edit-btn">edit</button>
+                    <input type="checkbox" class="task-checkbox" name="check" ${tabArray[i].checked ? "checked" : ""}>
+                    <button class="task-btn"> ${tabArray[i].title}</button>
+                </div>
+                <div>
                     <button class="task-date">${tabArray[i].date}</button>
+                    <button class="task-edit-btn">edit</button>
                     <button class="remove-task-btn">remove</button>
                 </div>
             </div>`
@@ -145,8 +148,7 @@ function renderTasks(projectIndex){
     })
     //Edit task
     const editTaskButtons = document.querySelectorAll(".task-edit-btn")
-    const taskListItems = document.querySelectorAll(".task-item-container")
-    editTaskButtons.forEach((btn, index)=> {
+    editTaskButtons.forEach(btn=> {
         btn.addEventListener("click", (e) => {
             editTaskForm.classList.remove("hidden")
             let taskListItem = e.target.closest(".task-item-container")
@@ -159,6 +161,15 @@ function renderTasks(projectIndex){
             //Modal action
             modalOn()
             modalTitle.textContent = "Edit Task"
+        })
+    })
+    //Check task
+    const checkTaskButtons = document.querySelectorAll(".task-checkbox")
+    checkTaskButtons.forEach(checkbox=>{
+        checkbox.addEventListener("click", (e) => {
+            let taskListItem = e.target.closest(".task-item-container")
+            projects.checkTask(taskListItem.dataset.parentProjectIndex, taskListItem.dataset.taskIndex)
+            renderTasks(selectedProjectIndex)
         })
     })
 }
