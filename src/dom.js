@@ -105,7 +105,7 @@ function renderTasks(projectIndex){
     function render(tabArray){
         for(let i=0; i < tabArray.length; i++){
             taskContainer.innerHTML += 
-            `<div class="task-item-container" 
+            `<div class="task-item-container ${tabArray[i].checked ? "checked" : ""}" 
             data-parent-project-index = ${tabArray[i].parentProjectIndex} 
             data-task-index = ${tabArray[i].taskIndex}>
                 <div>

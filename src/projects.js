@@ -58,7 +58,9 @@ export const projects = (() => {
     //Combine all tasks from all projects in the projectList array into a single array
     let getAllTasks = () => {
         const allTasks = projectList.reduce((acc, project)=> acc.concat(project.tasks), []);
-        return allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
+        allTasks.sort((a,b)=>a.date < b.date ? -1 : 1)
+        //order tasks by their checked state
+        return allTasks.filter(task => task.checked != true).concat(allTasks.filter(task => task.checked === true))
     }
     let getTodayTasks = () => {
         return getAllTasks().filter(task => task.date === today)

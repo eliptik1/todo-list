@@ -58,6 +58,16 @@ header {
         background-color: rgb(180, 182, 198);
         margin-bottom: 0.3rem;
     }
+    .task-item-container.checked {
+        background-color: rgba(180, 182, 198, 0.4);
+        .task-btn {
+            text-decoration: line-through;
+            opacity: 0.4;
+        }
+        .task-date {
+            opacity: 0.4;
+        }
+    }
     .task-edit-active {
         background-color: rgb(106, 126, 255);
     }
