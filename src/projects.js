@@ -1,5 +1,5 @@
 import { Task } from "./task";
-import { format, getWeek, isThisWeek, parseISO } from "date-fns"
+import { format, isThisWeek, parseISO } from "date-fns"
 
 export const projects = (() => {
 

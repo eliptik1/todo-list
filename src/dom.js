@@ -88,11 +88,12 @@ function renderProjects(){
         btn.addEventListener("click", (e) => {
             editProjectForm.classList.remove("hidden")
             let projectListItem = e.target.closest(".list-item-container")
-            //clear active classes for the purpose of selecting only one list item
-            projectListItems.forEach(item => item.classList.remove("edit-active")) 
             projectListItem.classList.add("edit-active")
             projectEditTitleInput.value = projects.projectList[index].title
             projectEditTitleInput.focus()
+            //Modal action
+            modalOn()
+            modalTitle.textContent = "Edit Project"
         })
     })
 } 
@@ -149,15 +150,15 @@ function renderTasks(projectIndex){
         btn.addEventListener("click", (e) => {
             editTaskForm.classList.remove("hidden")
             let taskListItem = e.target.closest(".task-item-container")
-            //clear active classes for the purpose of selecting only one list item
-            taskListItems.forEach(item => item.classList.remove("task-edit-active")) 
             taskListItem.classList.add("task-edit-active")
-        //editProjectForm.classList.remove("hidden")            
             taskEditTitleInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title
             projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date == "no date" ? 
                 taskEditDateInput.value = "" : 
                 taskEditDateInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date
-            taskEditTitleInput.focus() 
+            taskEditTitleInput.focus()
+            //Modal action
+            modalOn()
+            modalTitle.textContent = "Edit Task"
         })
     })
 }
@@ -165,7 +166,6 @@ function renderTasks(projectIndex){
 //Add new task form
 const titleInput = document.querySelector("#title")
 const dateInput = document.querySelector("#date")
-
 const taskForm = document.querySelector("#task-form")
 taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
@@ -205,6 +205,7 @@ editProjectForm.addEventListener("submit", (e)=> {
         projectEditTitleInput.value = ""
     }
     editProjectForm.classList.add("hidden")
+    modalOff()
 })
 cancelBtn.addEventListener("click", (e) => {
     e.preventDefault()
@@ -212,11 +213,11 @@ cancelBtn.addEventListener("click", (e) => {
     const projectListItems = document.querySelectorAll(".list-item-container")
     projectListItems.forEach(item => item.classList.remove("edit-active"))
     editProjectForm.classList.add("hidden")
+    modalOff()
 })
 
 //Edit task form
 const editTaskForm = document.querySelector("#edit-task-form")
-editTaskForm.classList.add("hidden") //hide form when the page loads
 const taskEditTitleInput = document.querySelector("#edit-task-title")
 const taskEditDateInput = document.querySelector("#edit-date")
 const taskCancelBtn = document.querySelector("#task-form-btn-cancel")
@@ -232,12 +233,37 @@ editTaskForm.addEventListener("submit", (e)=> {
     }
     editTaskForm.classList.add("hidden")
     editTaskForm.reset()
-    taskCancelBtn.addEventListener("click", (e) => {
-        e.preventDefault()
-        const taskListItems = document.querySelectorAll(".task-item-container")
-        taskListItems.forEach(item => item.classList.remove("task-edit-active"))
-        editTaskForm.classList.add("hidden")
-    })
+    modalOff()
 })
+taskCancelBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const taskListItems = document.querySelectorAll(".task-item-container")
+    taskListItems.forEach(item => item.classList.remove("task-edit-active"))
+    editTaskForm.classList.add("hidden")
+    modalOff()
+})
+
+//Modal window
+const modalTitle = document.querySelector("#modal-title")
+function modalOn(){
+    modal.classList.add("active")
+    overlay.classList.add("active")
+    overlay.addEventListener("click", ()=> {
+        modalOff()
+    })
+}
+function modalOff(){
+    modal.classList.remove("active")
+    overlay.classList.remove("active")
+    editProjectForm.classList.add("hidden")
+    editTaskForm.classList.add("hidden")
+    const projectListItems = document.querySelectorAll(".list-item-container")
+    const taskListItems = document.querySelectorAll(".task-item-container")
+    projectListItems.forEach(item => item.classList.remove("edit-active"))
+    taskListItems.forEach(item => item.classList.remove("task-edit-active"))
+}
+
+const modal = document.querySelector(".modal")
+const overlay = document.querySelector("#overlay")
 
 renderProjects() //Display the default projects in the projectList array when the page loads

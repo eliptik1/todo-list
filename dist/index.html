@@ -25,12 +25,6 @@
                         <input type="text" name="title" id="project-title" required><br>
                         <button> + Add project</button>
                     </form>
-                    <form id="edit-project-form">
-                        <label for="edit-project-title">Title:</label><br>
-                        <input type="text" name="title" id="edit-project-title" required><br>
-                        <button id="form-btn-edit">Edit</button>
-                        <button id="form-btn-cancel">Cancel</button>
-                    </form>
                 </div>
             </nav>
             <div class="right-panel">
@@ -44,18 +38,30 @@
                     <input type="date" name="date" id="date"><br>
                     <button id="btn-submit" form="task-form" type="submit"> + Add task </button>
                 </form>
-                <form id="edit-task-form">
-                    <label for="edit-task-title">Title:</label><br>
-                    <input type="text" name="title" id="edit-task-title" required><br>
-                    <label for="edit-date">Due date:</label><br>
-                    <input type="date" name="date" id="edit-date"><br>
-                    <button id="task-form-btn-edit">Edit</button>
-                    <button id="task-form-btn-cancel">Cancel</button>
-                </form>
             </div>
         </main>
         <footer>footer</footer>
+        
+        <div id="modal" class="modal">
+        <h3 id="modal-title"></h3>
+            <form id="edit-project-form">
+                <label for="edit-project-title">Title:</label><br>
+                <input type="text" name="title" id="edit-project-title" required><br>
+                <button id="form-btn-edit">Edit</button>
+                <button id="form-btn-cancel">Cancel</button>
+            </form>
+            <form id="edit-task-form">
+                <label for="edit-task-title">Title:</label><br>
+                <input type="text" name="title" id="edit-task-title" required><br>
+                <label for="edit-date">Due date:</label><br>
+                <input type="date" name="date" id="edit-date"><br>
+                <button id="task-form-btn-edit">Edit</button>
+                <button id="task-form-btn-cancel">Cancel</button>
+            </form>
+        </div>
+        <div id="overlay"></div>
     </div>
+    
     <script src="main.js"></script>
 </body>
 </html>
