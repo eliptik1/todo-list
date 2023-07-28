@@ -57,6 +57,92 @@ header {
         justify-content: space-between; 
         background-color: rgb(180, 182, 198);
         margin-bottom: 0.3rem;
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+
+            $border-none: rgb(121, 121, 121);
+            $border-low: rgb(93, 116, 249);
+            $border-medium: rgb(232, 131, 7);
+            $border-high: rgb(220, 45, 45);
+
+            $bg-low: rgb(220, 231, 255);
+            $bg-medium: rgb(255, 241, 220);
+            $bg-high: rgb(243, 218, 218);
+
+            .task-checkbox {
+                appearance: none;
+                aspect-ratio: 1;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                border: 3px solid $border-none;
+                background-color: rgb(244, 244, 244);
+                position: relative;
+                padding: 10px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .task-checkbox.low {
+                border: 3px solid $border-low;
+                background-color: $bg-low;
+            }
+            .task-checkbox.medium {
+                border: 3px solid $border-medium;
+                background-color: $bg-medium;
+            }
+            .task-checkbox.high {
+                border: 3px solid $border-high;
+                background-color: $bg-high;
+            }
+
+            .task-checkbox::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(225deg) scale(1, -1);
+                width: 3px;
+                height: 9px;
+                border: 3px solid $border-none;
+                border-left: 3px solid $border-none;
+                border-top: none;
+                border-right: none;
+                opacity: 0; 
+            }
+            .task-checkbox.low::before {
+                border-color: $border-low;;
+                border-left-color: $border-low;
+            }
+            .task-checkbox.medium::before {
+                border-color: $border-medium;;
+                border-left-color: $border-medium;
+            }
+            .task-checkbox.high::before {
+                border-color: $border-high;;
+                border-left-color: $border-high;
+            }
+
+            .task-checkbox:hover::before  {
+                opacity: 0.4;
+            }
+
+            .task-checkbox:checked, .task-checkbox:hover {
+                background-color: rgb(215, 215, 215);
+            }
+            .task-checkbox.low:checked, .task-checkbox.low:hover {
+                background-color: rgb(197, 215, 255);
+            }
+            .task-checkbox.medium:checked, .task-checkbox.medium:hover {
+                background-color: rgb(255, 229, 190);
+            }
+            .task-checkbox.high:checked, .task-checkbox.high:hover {
+                background-color: rgb(253, 207, 207);
+            }
+            .task-checkbox:checked::before {
+                opacity: 1;
+            }
+        }
     }
     .task-item-container.checked {
         background-color: rgba(180, 182, 198, 0.4);
@@ -64,7 +150,7 @@ header {
             text-decoration: line-through;
             opacity: 0.4;
         }
-        .task-date {
+        .task-date, .task-priority {
             opacity: 0.4;
         }
     }

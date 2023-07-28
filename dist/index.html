@@ -36,6 +36,14 @@
                     <input type="text" name="title" id="title" required><br>
                     <label for="date">Due date:</label><br>
                     <input type="date" name="date" id="date"><br>
+                    <label for="priority">Priority:</label><br>
+                    <select name="priority" id="priority">
+                        <option value="-">-</option>
+                        <option value="low" selected>Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                        <br>
                     <button id="btn-submit" form="task-form" type="submit"> + Add task </button>
                 </form>
             </div>

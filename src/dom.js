@@ -108,11 +108,12 @@ function renderTasks(projectIndex){
             `<div class="task-item-container ${tabArray[i].checked ? "checked" : ""}" 
             data-parent-project-index = ${tabArray[i].parentProjectIndex} 
             data-task-index = ${tabArray[i].taskIndex}>
-                <div>
-                    <input type="checkbox" class="task-checkbox" name="check" ${tabArray[i].checked ? "checked" : ""}>
+                <div class="checkbox-container">
+                    <input type="checkbox" class="task-checkbox ${tabArray[i].priority}" name="check" ${tabArray[i].checked ? "checked" : ""}>
                     <button class="task-btn"> ${tabArray[i].title}</button>
                 </div>
                 <div>
+                    <button class="task-priority">${tabArray[i].priority}</button>
                     <button class="task-date">${tabArray[i].date}</button>
                     <button class="task-edit-btn">edit</button>
                     <button class="remove-task-btn">remove</button>
@@ -178,6 +179,7 @@ function renderTasks(projectIndex){
 const titleInput = document.querySelector("#title")
 const dateInput = document.querySelector("#date")
 const taskForm = document.querySelector("#task-form")
+const prioritySelection = document.querySelector("#priority") 
 taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     //if user doesn't specify a date, set it to "no date", else, use the dateInput's value
@@ -185,7 +187,7 @@ taskForm.addEventListener("submit", (e)=> {
     if (taskDate === "") {
         taskDate = "no date";
     }
-    projects.addTask(titleInput.value, taskDate, selectedProjectIndex)
+    projects.addTask(titleInput.value, taskDate, prioritySelection.value, selectedProjectIndex)
     taskForm.reset()
     renderProjects()
     renderTasks(selectedProjectIndex)

@@ -8,8 +8,8 @@ export const projects = (() => {
             this.title = title
             this.tasks = []
         }
-        addTask(title, date, projectIndex){
-            const newTask = new Task(title, date)
+        addTask(title, date, priority, projectIndex){
+            const newTask = new Task(title, date, priority)
             projectList[projectIndex].tasks.push(newTask)
             //Assign each task their parent project's index & task index
             projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
@@ -41,17 +41,20 @@ export const projects = (() => {
                 projectList[projectIndex].tasks[taskIndex].checked = true :
                 projectList[projectIndex].tasks[taskIndex].checked = false
         }
+        setPriority(projectIndex, taskIndex, value){
+            projectList[projectIndex].tasks[taskIndex].priority = value
+        }
     }
 
     //Default projects and tasks
     let projectList = [new Project("first-project"), new Project("second-project"), new Project("third-project"),new Project("fourth-project")];
     const myProject = new Project()
     
-    projectList[0].tasks.push(new Task("first", "2023-07-24"))
-    projectList[0].tasks.push(new Task("first-2", "2023-07-20"))
+    projectList[0].tasks.push(new Task("first", "2023-07-24", "low"))
+    projectList[0].tasks.push(new Task("first-2", "2023-07-20", "high"))
     projectList[1].tasks.push(new Task("second", "2023-07-23"))
-    projectList[2].tasks.push(new Task("third", "2023-07-22"))
-    projectList[3].tasks.push(new Task("fourth", "2023-07-21"))
+    projectList[2].tasks.push(new Task("third", "2023-07-22", "medium"))
+    projectList[3].tasks.push(new Task("fourth", "2023-07-21", "low"))
     //Assign each task their parent project's index & task index
     projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
     projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
@@ -85,6 +88,7 @@ export const projects = (() => {
         removeTask: myProject.removeTask,
         editProject:myProject.editProject,
         editTask: myProject.editTask,
-        checkTask: myProject.checkTask
+        checkTask: myProject.checkTask,
+        setPriority: myProject.setPriority
     }
 })() 
