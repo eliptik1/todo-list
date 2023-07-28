@@ -1,5 +1,6 @@
 import { projects } from "./projects"
 const projectTitle = document.querySelector(".project-title")
+const titleIcon = document.querySelector("#title-icon")
 
 const allBtn = document.querySelector("#all-btn")
 const todayBtn = document.querySelector("#today-btn")
@@ -9,12 +10,13 @@ export const createDOM = () => {
     renderTasks(selectedProjectIndex)
 }
 //Navbar buttons
-allBtn.addEventListener("click", ()=> displayTab("allTasks", "All tasks"))
-todayBtn.addEventListener("click", ()=> displayTab("today", "Today"))
-weekBtn.addEventListener("click", ()=> displayTab("week", "This week"))
+allBtn.addEventListener("click", ()=> displayTab("allTasks", "All tasks", "stack"))
+todayBtn.addEventListener("click", ()=> displayTab("today", "Today", "star"))
+weekBtn.addEventListener("click", ()=> displayTab("week", "This week", "calendar"))
 
-function displayTab(tabName, tabTitle){
+function displayTab(tabName, tabTitle, tabIcon){
     projectTitle.textContent = tabTitle
+    titleIcon.src = `./assets/${tabIcon}.svg`
     renderTasks(tabName)
     selectProject(tabName)
     taskForm.classList.add("hidden")
@@ -33,10 +35,10 @@ function renderProjects(){
     for(let i = 0; i < projects.projectList.length; i++){
         projectContainer.innerHTML += 
         `<div class="list-item-container" data-project-index = ${i} >
-        <button class="project-btn"> ${projects.projectList[i].title}</button>
+        <div class="btn-container"><img id="box" src="./assets/box.svg" alt="Project"><button class="project-btn"> ${projects.projectList[i].title}</button></div>
         <div class="edit-container">
-            <button class="edit-btn">edit</button>
-            <button class="remove-btn">remove</button>
+            <button class="edit-btn"><img src="./assets/edit.svg"></button>
+            <button class="remove-btn"><img src="./assets/remove.svg"></button>
         </div>
         </div>`
     }
@@ -79,6 +81,7 @@ function renderProjects(){
         btn.addEventListener("click", () => {
             selectProject(index)
             renderTasks(selectedProjectIndex)
+            titleIcon.src = `./assets/box.svg`
         })
     })
     //Edit project title
@@ -87,6 +90,7 @@ function renderProjects(){
     editProjectButtons.forEach((btn, index)=> {
         btn.addEventListener("click", (e) => {
             editProjectForm.classList.remove("hidden")
+            editTaskForm.classList.add("hidden")
             let projectListItem = e.target.closest(".list-item-container")
             projectListItem.classList.add("edit-active")
             projectEditTitleInput.value = projects.projectList[index].title
@@ -112,11 +116,12 @@ function renderTasks(projectIndex){
                     <input type="checkbox" class="task-checkbox ${tabArray[i].priority}" name="check" ${tabArray[i].checked ? "checked" : ""}>
                     <button class="task-btn"> ${tabArray[i].title}</button>
                 </div>
-                <div>
+                <div class="task-btns-container">
                     <button class="task-priority">${tabArray[i].priority}</button>
                     <button class="task-date">${tabArray[i].date}</button>
-                    <button class="task-edit-btn">edit</button>
-                    <button class="remove-task-btn">remove</button>
+                    
+                    <button class="task-edit-btn"><img src="./assets/edit.svg"></button>
+                    <button class="remove-task-btn"><img src="./assets/remove.svg"></button>
                 </div>
             </div>`
         }
@@ -234,13 +239,14 @@ const editTaskForm = document.querySelector("#edit-task-form")
 const taskEditTitleInput = document.querySelector("#edit-task-title")
 const taskEditDateInput = document.querySelector("#edit-date")
 const taskCancelBtn = document.querySelector("#task-form-btn-cancel")
+const priorityEditInput = document.querySelector("#edit-priority")
 editTaskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     let newDate = taskEditDateInput.value;
     (newDate === "") ? newDate = "no date" : newDate = taskEditDateInput.value
     const selectedItem = document.querySelector(".task-edit-active")
     if(selectedItem) {
-        projects.editTask(selectedItem.dataset.parentProjectIndex, selectedItem.dataset.taskIndex, taskEditTitleInput.value, newDate)
+        projects.editTask(selectedItem.dataset.parentProjectIndex, selectedItem.dataset.taskIndex, taskEditTitleInput.value, newDate, priorityEditInput.value)
         renderProjects()
         renderTasks(selectedProjectIndex)
     }

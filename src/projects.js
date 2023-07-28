@@ -32,9 +32,10 @@ export const projects = (() => {
         editProject(index, newTitle){
             projectList[index].title = newTitle
         }
-        editTask(projectIndex, taskIndex, newTitle, newDate){
+        editTask(projectIndex, taskIndex, newTitle, newDate, newPriority){
             projectList[projectIndex].tasks[taskIndex].title = newTitle
             projectList[projectIndex].tasks[taskIndex].date = newDate
+            projectList[projectIndex].tasks[taskIndex].priority = newPriority
         }
         checkTask(projectIndex, taskIndex){
             projectList[projectIndex].tasks[taskIndex].checked === false ? 
