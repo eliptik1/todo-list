@@ -34,7 +34,7 @@ img {
     display: flex;
     align-items: center;
 }
-.btn-container:hover {
+.active {
     background-color: rgb(217, 220, 227);
 }
 
@@ -47,24 +47,37 @@ img {
         display: flex;
         flex-direction: column;
     }
+    .nav-btn:hover {
+        background-color: rgb(217, 220, 227);
+    }
+    .project-btn:focus-within .edit-container { 
+            display: flex;
+            align-items: center;
+    }
     .project-list {
         display: flex;
         flex-direction: column;
-        .list-item-container {
+        .project-btn {
             display: flex;
             justify-content: space-between; 
             cursor: pointer;
         }
-        .list-item-container:hover {
-            background-color: rgb(217, 220, 227);
+        .project-btn:hover {
+            .edit-container { 
+                display: flex;
+                align-items: center;
+            }
         }
         .edit-container {
-            display: flex;
-            align-items: center;
+            display: none;
         }
     }
     .edit-active {
             background-color: rgb(106, 126, 255);
+            .edit-container { 
+                display: flex;
+                align-items: center;
+            }
     }
 }
 

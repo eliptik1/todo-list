@@ -26,7 +26,19 @@ function displayTab(tabName, tabTitle, tabIcon){
 let selectedProjectIndex = 0
 function selectProject(index){
     selectedProjectIndex = index
-    taskForm.classList.remove("hidden")
+    //Making selected button active
+    const projectButtons = document.querySelectorAll(".project-btn")
+    const navButtons = document.querySelectorAll(".nav-btn")
+    projectButtons.forEach(btn => btn.classList.remove("active")) //clear all active buttons when selecting a project
+    navButtons.forEach(btn => btn.classList.remove("active")) //clear all active buttons when selecting a nav button
+    if(projectButtons.length !=0 && Number.isInteger(index)) { //If all projects are not removed & project index is a number
+        projectButtons[selectedProjectIndex].classList.add("active"); 
+        taskForm.classList.remove("hidden")
+    } else {
+        if(index === "allTasks") navButtons[0].classList.add("active"); //Make "allTasks" button active since it's already selected
+        if(index === "today") navButtons[1].classList.add("active"); //Keep "today" button active while creating a project when it's selected
+        if(index === "week") navButtons[2].classList.add("active"); //Keep "week" button active while creating a project when it's selected
+    }
 }
 
 function renderProjects(){
@@ -34,7 +46,7 @@ function renderProjects(){
     projectContainer.innerHTML = "" // clear existing projects display when calling the function more than once
     for(let i = 0; i < projects.projectList.length; i++){
         projectContainer.innerHTML += 
-        `<div class="list-item-container project-btn" data-project-index = ${i} >
+        `<div class="project-btn" data-project-index = ${i} >
             <button>
                 <div class="btn-container">
                     <img id="box" src="./assets/box.svg" alt="Project">
@@ -52,7 +64,7 @@ function renderProjects(){
     projectRemoveButtons.forEach((btn, index) => {
         btn.addEventListener("click", (e)=>{
             projects.removeProject(index)
-            let projectListItem = e.target.closest(".list-item-container") // Find the btn's container element: ".list-item-container"
+            let projectListItem = e.target.closest(".project-btn") // Find the btn's container element: ".project-btn"
             projectListItem.remove()
             renderProjects()
             if(selectedProjectIndex === "allTasks") {
@@ -77,27 +89,35 @@ function renderProjects(){
             }
             if(projectRemoveButtons.length-1 === 0) { //if you remove all projects, display "all tasks" tab
                 displayTab("allTasks", "All tasks", "stack")
+                selectProject("allTasks")
             }
             e.stopPropagation();
         })
     })
     //View selected project
-    const selectProjectButtons = document.querySelectorAll(".project-btn")
-    selectProjectButtons.forEach((btn, index)=> {
+    const projectButtons = document.querySelectorAll(".project-btn")
+    projectButtons.forEach((btn, index)=> {
         btn.addEventListener("click", () => {
             selectProject(index)
             renderTasks(selectedProjectIndex)
             titleIcon.src = `./assets/box.svg`
+            projectButtons[index].classList.add("active")
         })
     })
+    const navButtons = document.querySelectorAll(".nav-btn")
+    navButtons.forEach((btn, index) => {
+        btn.addEventListener("click", ()=> {
+            navButtons.forEach(btn => btn.classList.remove("active")) //clear all active buttons when selecting a nav button
+            navButtons[index].classList.add("active")})
+        })
+
     //Edit project title
     const editProjectButtons = document.querySelectorAll(".edit-btn")
-    const projectListItems = document.querySelectorAll(".list-item-container")
     editProjectButtons.forEach((btn, index)=> {
         btn.addEventListener("click", (e) => {
             editProjectForm.classList.remove("hidden")
             editTaskForm.classList.add("hidden")
-            let projectListItem = e.target.closest(".list-item-container")
+            let projectListItem = e.target.closest(".project-btn")
             projectListItem.classList.add("edit-active")
             projectEditTitleInput.value = projects.projectList[index].title
             projectEditTitleInput.focus()
@@ -148,7 +168,7 @@ function renderTasks(projectIndex){
     const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")
     taskRemoveButtons.forEach( btn => {
         btn.addEventListener("click", (e)=>{
-            let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".list-item-container"
+            let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".task-item-container"
             //use data attributes to modify the projectList. 
             projects.removeTask(projectListItem2.dataset.taskIndex, projectListItem2.dataset.parentProjectIndex) 
             if(projectIndex === "allTasks") { 
@@ -214,6 +234,7 @@ projectForm.addEventListener("submit", (e)=> {
     projectTitleInput.value = ""
     renderProjects()
     renderTasks(selectedProjectIndex)
+    selectProject(selectedProjectIndex)
 })
 
 //Edit project form
@@ -236,7 +257,7 @@ editProjectForm.addEventListener("submit", (e)=> {
 cancelBtn.addEventListener("click", (e) => {
     e.preventDefault()
     projectEditTitleInput.value = ""
-    const projectListItems = document.querySelectorAll(".list-item-container")
+    const projectListItems = document.querySelectorAll(".project-btn")
     projectListItems.forEach(item => item.classList.remove("edit-active"))
     editProjectForm.classList.add("hidden")
     modalOff()
@@ -284,7 +305,7 @@ function modalOff(){
     overlay.classList.remove("active")
     editProjectForm.classList.add("hidden")
     editTaskForm.classList.add("hidden")
-    const projectListItems = document.querySelectorAll(".list-item-container")
+    const projectListItems = document.querySelectorAll(".project-btn")
     const taskListItems = document.querySelectorAll(".task-item-container")
     projectListItems.forEach(item => item.classList.remove("edit-active"))
     taskListItems.forEach(item => item.classList.remove("task-edit-active"))
@@ -294,3 +315,4 @@ const modal = document.querySelector(".modal")
 const overlay = document.querySelector("#overlay")
 
 renderProjects() //Display the default projects in the projectList array when the page loads
+selectProject(0) //Select the first project if exists when the page loads
