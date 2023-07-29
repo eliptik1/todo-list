@@ -34,12 +34,17 @@ function renderProjects(){
     projectContainer.innerHTML = "" // clear existing projects display when calling the function more than once
     for(let i = 0; i < projects.projectList.length; i++){
         projectContainer.innerHTML += 
-        `<div class="list-item-container" data-project-index = ${i} >
-        <div class="btn-container"><img id="box" src="./assets/box.svg" alt="Project"><button class="project-btn"> ${projects.projectList[i].title}</button></div>
-        <div class="edit-container">
-            <button class="edit-btn"><img src="./assets/edit.svg"></button>
-            <button class="remove-btn"><img src="./assets/remove.svg"></button>
-        </div>
+        `<div class="list-item-container project-btn" data-project-index = ${i} >
+            <button>
+                <div class="btn-container">
+                    <img id="box" src="./assets/box.svg" alt="Project">
+                    <div> ${projects.projectList[i].title}</div>
+                </div>
+            </button>
+            <div class="edit-container">
+                <button class="edit-btn"><img src="./assets/edit.svg"></button>
+                <button class="remove-btn"><img src="./assets/remove.svg"></button>
+            </div>
         </div>`
     }
     //Remove projects
@@ -71,8 +76,9 @@ function renderProjects(){
                 selectProject(index-1)
             }
             if(projectRemoveButtons.length-1 === 0) { //if you remove all projects, display "all tasks" tab
-                displayTab("allTasks", "All tasks")
+                displayTab("allTasks", "All tasks", "stack")
             }
+            e.stopPropagation();
         })
     })
     //View selected project
@@ -95,6 +101,7 @@ function renderProjects(){
             projectListItem.classList.add("edit-active")
             projectEditTitleInput.value = projects.projectList[index].title
             projectEditTitleInput.focus()
+            e.stopPropagation();
             //Modal action
             modalOn()
             modalTitle.textContent = "Edit Project"
@@ -160,6 +167,7 @@ function renderTasks(projectIndex){
             let taskListItem = e.target.closest(".task-item-container")
             taskListItem.classList.add("task-edit-active")
             taskEditTitleInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title
+            priorityEditInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].priority
             projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date == "no date" ? 
                 taskEditDateInput.value = "" : 
                 taskEditDateInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date

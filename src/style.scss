@@ -15,12 +15,14 @@ header {
     main {
         display: flex;
         height: 100%;
-        button {
-            display: flex;
-            align-items: center;
-            margin: 0.2rem;
-        }
     }
+}
+button {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 img {
     width: 23px;
@@ -32,6 +34,10 @@ img {
     display: flex;
     align-items: center;
 }
+.btn-container:hover {
+    background-color: rgb(217, 220, 227);
+}
+
 .left-panel {
     height: 100%;
     width: 350px;
@@ -44,19 +50,21 @@ img {
     .project-list {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
         .list-item-container {
             display: flex;
             justify-content: space-between; 
+            cursor: pointer;
+        }
+        .list-item-container:hover {
             background-color: rgb(217, 220, 227);
         }
         .edit-container {
             display: flex;
             align-items: center;
         }
-        .edit-active {
+    }
+    .edit-active {
             background-color: rgb(106, 126, 255);
-        }
     }
 }
 
