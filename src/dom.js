@@ -32,9 +32,10 @@ function selectProject(index){
     projectButtons.forEach(btn => btn.classList.remove("active")) //clear all active buttons when selecting a project
     navButtons.forEach(btn => btn.classList.remove("active")) //clear all active buttons when selecting a nav button
     if(projectButtons.length !=0 && Number.isInteger(index)) { //If all projects are not removed & project index is a number
-        projectButtons[selectedProjectIndex].classList.add("active"); 
-        taskForm.classList.remove("hidden")
+        projectButtons[selectedProjectIndex].classList.add("active");
+        openTaskFormBtn.classList.remove("hidden")
     } else {
+        openTaskFormBtn.classList.add("hidden")
         if(index === "allTasks") navButtons[0].classList.add("active"); //Make "allTasks" button active since it's already selected
         if(index === "today") navButtons[1].classList.add("active"); //Keep "today" button active while creating a project when it's selected
         if(index === "week") navButtons[2].classList.add("active"); //Keep "week" button active while creating a project when it's selected
@@ -213,6 +214,26 @@ const titleInput = document.querySelector("#title")
 const dateInput = document.querySelector("#date")
 const taskForm = document.querySelector("#task-form")
 const prioritySelection = document.querySelector("#priority") 
+const openTaskFormBtn = document.querySelector("#open-task-form")
+function showTaskForm(){
+    taskForm.classList.remove("hidden")
+    openTaskFormBtn.classList.add("hidden")
+}
+function hideTaskForm(){
+    taskForm.classList.add("hidden")
+    openTaskFormBtn.classList.remove("hidden")
+}
+openTaskFormBtn.addEventListener("click", (e)=> {
+    showTaskForm()
+    titleInput.focus()
+})
+// Hide the task form when clicking outside the form
+document.addEventListener('mousedown', (e) => {
+    //if the clicked element is not a part of the form or its children && any project(not home tabs) is selected
+    if (!taskForm.contains(e.target) && Number.isInteger(selectedProjectIndex)) {
+        hideTaskForm();
+    }
+});
 taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     //if user doesn't specify a date, set it to "no date", else, use the dateInput's value
@@ -222,16 +243,39 @@ taskForm.addEventListener("submit", (e)=> {
     }
     projects.addTask(titleInput.value, taskDate, prioritySelection.value, selectedProjectIndex)
     taskForm.reset()
+    hideTaskForm();
     renderProjects()
     renderTasks(selectedProjectIndex)
 })
+
 //Add new project form
 const projectTitleInput = document.querySelector("#project-title")
 const projectForm = document.querySelector("#project-form")
+const openProjectFormBtn = document.querySelector("#open-project-form")
+function showProjectForm(){
+    projectForm.classList.remove("hidden")
+    openProjectFormBtn.classList.add("hidden")
+}
+function hideProjectForm(){
+    projectForm.classList.add("hidden")
+    openProjectFormBtn.classList.remove("hidden")
+}
+openProjectFormBtn.addEventListener("click", (e)=> {
+    showProjectForm()
+    projectTitleInput.focus()
+})
+// Hide the project form when clicking outside the form
+document.addEventListener('mousedown', (e) => {
+    //if the clicked element is not a part of the form or its children
+    if (!projectForm.contains(e.target)) {
+        hideProjectForm();
+    }
+});
 projectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     projects.addProject(projectTitleInput.value)
     projectTitleInput.value = ""
+    hideProjectForm();
     renderProjects()
     renderTasks(selectedProjectIndex)
     selectProject(selectedProjectIndex)
