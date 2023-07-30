@@ -185,7 +185,7 @@ function renderTasks(projectIndex){
         btn.addEventListener("click", (e) => {
             editTaskForm.classList.remove("hidden")
             let taskListItem = e.target.closest(".task-item-container")
-            taskListItem.classList.add("task-edit-active")
+            taskListItem.classList.add("edit-active")
             taskEditTitleInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title
             priorityEditInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].priority
             projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].date == "no date" ? 
@@ -273,7 +273,7 @@ editTaskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     let newDate = taskEditDateInput.value;
     (newDate === "") ? newDate = "no date" : newDate = taskEditDateInput.value
-    const selectedItem = document.querySelector(".task-edit-active")
+    const selectedItem = document.querySelector(".edit-active")
     if(selectedItem) {
         projects.editTask(selectedItem.dataset.parentProjectIndex, selectedItem.dataset.taskIndex, taskEditTitleInput.value, newDate, priorityEditInput.value)
         renderProjects()
@@ -286,7 +286,7 @@ editTaskForm.addEventListener("submit", (e)=> {
 taskCancelBtn.addEventListener("click", (e) => {
     e.preventDefault()
     const taskListItems = document.querySelectorAll(".task-item-container")
-    taskListItems.forEach(item => item.classList.remove("task-edit-active"))
+    taskListItems.forEach(item => item.classList.remove("edit-active"))
     editTaskForm.classList.add("hidden")
     modalOff()
 })
@@ -308,7 +308,7 @@ function modalOff(){
     const projectListItems = document.querySelectorAll(".project-btn")
     const taskListItems = document.querySelectorAll(".task-item-container")
     projectListItems.forEach(item => item.classList.remove("edit-active"))
-    taskListItems.forEach(item => item.classList.remove("task-edit-active"))
+    taskListItems.forEach(item => item.classList.remove("edit-active"))
 }
 
 const modal = document.querySelector(".modal")

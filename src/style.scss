@@ -1,10 +1,45 @@
+//page component colors
+$header: rgb(158, 173, 240);
+$left-panel: rgb(241, 244, 246);
+$right-panel: rgb(255, 255, 255);
+$footer: rgb(94, 109, 152);
+
+//button colors
+$task-bg: rgb(195, 221, 255);
+$task-bg-checked: rgba(195, 221, 255, 0.35);
+$nav-hover-bg: rgb(217, 220, 227);
+$nav-active-bg: rgb(217, 220, 227);
+$task-edit-bg: rgb(132, 185, 255);
+$project-edit-bg: rgb(217, 220, 227);
+
+//checkbox colors
+$border-none: rgb(121, 121, 121);
+$border-low: rgb(93, 116, 249);
+$border-medium: rgb(232, 131, 7);
+$border-high: rgb(220, 45, 45);
+$bg-none: rgb(244, 244, 244);
+$bg-low: rgb(220, 231, 255);
+$bg-medium: rgb(255, 241, 220);
+$bg-high: rgb(243, 218, 218);
+$bg-none-checked: rgb(215, 215, 215);
+$bg-low-checked: rgb(197, 215, 255);
+$bg-medium-checked: rgb(255, 229, 190);
+$bg-high-checked: rgb(253, 207, 207);
+
+//Modal screen colors
+$modal-bg: rgb(243, 250, 255);
+$modal-header: rgb(164, 169, 183);
+$modal-title: rgb(29, 29, 29);
+$modal-text: rgb(32, 45, 63);
+$modal-overlay: rgba(0, 0, 0, 0.5);
+
 * {
     margin: 0;
 	padding: 0;
     box-sizing: border-box;
 }
 header {
-    background-color: rgb(158, 173, 240);
+    background-color: $header;
     padding: 2rem;
 }
 #content {
@@ -35,20 +70,20 @@ img {
     align-items: center;
 }
 .active {
-    background-color: rgb(217, 220, 227);
+    background-color: $nav-active-bg;
 }
 
 .left-panel {
     height: 100%;
     width: 350px;
     padding: 20px;
-    background-color: rgb(241, 244, 246);
+    background-color: $left-panel;
     .home {
         display: flex;
         flex-direction: column;
     }
     .nav-btn:hover {
-        background-color: rgb(217, 220, 227);
+        background-color: $nav-hover-bg;
     }
     .project-btn:focus-within .edit-container { 
             display: flex;
@@ -73,7 +108,7 @@ img {
         }
     }
     .edit-active {
-            background-color: rgb(106, 126, 255);
+            background-color: $project-edit-bg;
             .edit-container { 
                 display: flex;
                 align-items: center;
@@ -85,7 +120,7 @@ img {
     flex: 1;
     height: 100%;
     padding: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: $right-panel;
     .title-container {
         display: flex;
         align-items: center;
@@ -97,7 +132,7 @@ img {
     .task-item-container {
         display: flex;
         justify-content: space-between; 
-        background-color: rgb(195, 221, 255);
+        background-color: $task-bg;
         margin-bottom: 0.3rem;
         .task-btns-container {
             display: flex;
@@ -106,16 +141,6 @@ img {
         .checkbox-container {
             display: flex;
             align-items: center;
-
-            $border-none: rgb(121, 121, 121);
-            $border-low: rgb(93, 116, 249);
-            $border-medium: rgb(232, 131, 7);
-            $border-high: rgb(220, 45, 45);
-
-            $bg-low: rgb(220, 231, 255);
-            $bg-medium: rgb(255, 241, 220);
-            $bg-high: rgb(243, 218, 218);
-
             .task-checkbox {
                 appearance: none;
                 aspect-ratio: 1;
@@ -123,7 +148,7 @@ img {
                 height: 22px;
                 border-radius: 50%;
                 border: 3px solid $border-none;
-                background-color: rgb(244, 244, 244);
+                background-color: $bg-none;
                 position: relative;
                 padding: 10px;
                 margin-right: 10px;
@@ -174,16 +199,16 @@ img {
             }
 
             .task-checkbox:checked, .task-checkbox:hover {
-                background-color: rgb(215, 215, 215);
+                background-color: $bg-none-checked;
             }
             .task-checkbox.low:checked, .task-checkbox.low:hover {
-                background-color: rgb(197, 215, 255);
+                background-color: $bg-low-checked;
             }
             .task-checkbox.medium:checked, .task-checkbox.medium:hover {
-                background-color: rgb(255, 229, 190);
+                background-color: $bg-medium-checked;
             }
             .task-checkbox.high:checked, .task-checkbox.high:hover {
-                background-color: rgb(253, 207, 207);
+                background-color: $bg-high-checked;
             }
             .task-checkbox:checked::before {
                 opacity: 1;
@@ -191,7 +216,7 @@ img {
         }
     }
     .task-item-container.checked {
-        background-color: rgba(180, 182, 198, 0.4);
+        background-color: $task-bg-checked;
         .task-btn {
             text-decoration: line-through;
             opacity: 0.4;
@@ -200,10 +225,9 @@ img {
             opacity: 0.4;
         }
     }
-    .task-edit-active {
-        background-color: rgb(106, 126, 255);
+    .edit-active, .task-item-container.checked.edit-active {
+        background-color: $task-edit-bg;
     }
-
 }
 
 .hidden {
@@ -215,18 +239,18 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    background-color: rgb(94, 109, 152);
+    background-color: $footer;
 }
 
 /* Modal screen */
 .modal {
-    color: #202d3f;
+    color: $modal-text;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     z-index: 1;
-    background-color: #f3faff;
+    background-color: $modal-bg;
     width: min(90%, 350px);
     font-size: 1rem;
     font-weight: 600;
@@ -236,8 +260,8 @@ footer {
 }
 .modal h3 {
     padding: 1rem;
-    color: #1d1d1d;
-    background-color: rgb(164, 169, 183);
+    color: $modal-title;
+    background-color: $modal-header;
 }
 #overlay {
     transition: z-index 1s ease;
@@ -248,7 +272,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: $modal-overlay;
     pointer-events: none; 
 }
 #overlay.active {
