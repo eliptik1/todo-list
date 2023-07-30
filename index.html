@@ -20,18 +20,19 @@
                 <div class="projects">
                     <h1>Projects</h1>
                     <div class="project-list"></div>
-                    <form id="project-form">
+                    <form id="project-form" class="hidden">
                         <label for="project-title">Title:</label><br>
                         <input type="text" name="title" id="project-title" required><br>
-                        <button><img id="add" src="./assets/add.svg" alt="Add-project">Add project</button>
+                        <button form="project-form">Add</button>
                     </form>
+                    <button id="open-project-form"><img id="add" src="./assets/add.svg" alt="Add-project">Add project</button>
                 </div>
             </nav>
             <div class="right-panel">
                 <div class="title-container"><img id="title-icon" src="./assets/box.svg" alt="Project"><h1 class="project-title"></h1></div>
                 <div class="task-list"></div>
                 
-                <form id="task-form">
+                <form id="task-form" class="hidden">
                     <label for="title">Title:</label><br>
                     <input type="text" name="title" id="title" required><br>
                     <label for="date">Due date:</label><br>
@@ -44,8 +45,9 @@
                         <option value="high">High</option>
                     </select>
                         <br>
-                    <button id="btn-submit" form="task-form" type="submit"><img id="add" src="./assets/add.svg" alt="Add-task">Add task</button>
+                    <button id="btn-submit" form="task-form" type="submit">Add</button>
                 </form>
+                <button id="open-task-form"><img id="add" src="./assets/add.svg" alt="Add-task">Add task</button>
             </div>
         </main>
         <footer>footer</footer>
