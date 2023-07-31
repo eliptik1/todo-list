@@ -142,14 +142,14 @@ function renderTasks(projectIndex){
             data-task-index = ${tabArray[i].taskIndex}>
                 <div class="checkbox-container">
                     <input type="checkbox" class="task-checkbox ${tabArray[i].priority}" name="check" ${tabArray[i].checked ? "checked" : ""}>
-                    <button class="task-btn"> ${tabArray[i].title}</button>
+                    <div class="task-title"> ${tabArray[i].title}</div>
                 </div>
                 <div class="task-btns-container">
-                    <button class="task-priority">${tabArray[i].priority}</button>
-                    <button class="task-date">${tabArray[i].date}</button>
+                    <div class="task-priority">${tabArray[i].priority}</div>
+                    <div class="task-date">${tabArray[i].date}</div>
                     
-                    <button class="task-edit-btn"><img src="./assets/edit.svg"></button>
-                    <button class="remove-task-btn"><img src="./assets/remove.svg"></button>
+                    <button class="task-edit-btn edit-btn"><img src="./assets/edit.svg"></button>
+                    <button class="remove-task-btn remove-btn"><img src="./assets/remove.svg"></button>
                 </div>
             </div>`
         }

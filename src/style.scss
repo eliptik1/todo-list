@@ -38,6 +38,9 @@ $modal-overlay: rgba(0, 0, 0, 0.5);
 	padding: 0;
     box-sizing: border-box;
 }
+body {
+    overflow: hidden;
+}
 header {
     background-color: $header;
     padding: 2rem;
@@ -52,7 +55,7 @@ header {
         height: 100%;
     }
 }
-button {
+button:not(form button){
     display: flex;
     align-items: center;
     border: none;
@@ -60,10 +63,16 @@ button {
     cursor: pointer;
 }
 img {
-    width: 23px;
+    width: 28px;
+    user-select: none;
 }
-#add {
-    width: 33px;
+.edit-btn, .remove-btn {
+    img {width: 20px;}
+}
+.edit-btn:hover, .remove-btn:hover {
+    img {
+        filter: brightness(10%) contrast(10%);
+    }
 }
 .btn-container {
     display: flex;
@@ -72,13 +81,16 @@ img {
 .active {
     background-color: $nav-active-bg;
 }
+form + button:hover {
+    background-color: $nav-hover-bg;
+}
 
 .left-panel {
     height: 100%;
     width: 350px;
     padding: 20px;
     background-color: $left-panel;
-    .home {
+    .home, .projects {
         display: flex;
         flex-direction: column;
     }
@@ -90,14 +102,13 @@ img {
             align-items: center;
     }
     .project-list {
-        display: flex;
-        flex-direction: column;
         .project-btn {
             display: flex;
             justify-content: space-between; 
             cursor: pointer;
         }
         .project-btn:hover {
+            background-color: $nav-hover-bg;
             .edit-container { 
                 display: flex;
                 align-items: center;
@@ -117,6 +128,8 @@ img {
 }
 
 .right-panel {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     height: 100%;
     padding: 20px;
@@ -124,7 +137,7 @@ img {
     .title-container {
         display: flex;
         align-items: center;
-        img { width: 33px; }
+        img { width: 40px; }
         img[src*="box"] {
             filter: invert(60%) sepia(46%) saturate(322%) hue-rotate(103deg) brightness(90%) contrast(93%);
         }
@@ -132,15 +145,22 @@ img {
     .task-item-container {
         display: flex;
         justify-content: space-between; 
+        align-items: flex-start;
         background-color: $task-bg;
         margin-bottom: 0.3rem;
+        .task-title {
+            margin-right: 2rem;
+        }
         .task-btns-container {
             display: flex;
-            align-items: center;
+            //align-items: center;
+            .task-date {
+                white-space:nowrap;
+                margin: 0 3rem;
+            }
         }
         .checkbox-container {
             display: flex;
-            align-items: center;
             .task-checkbox {
                 appearance: none;
                 aspect-ratio: 1;
@@ -227,6 +247,35 @@ img {
     }
     .edit-active, .task-item-container.checked.edit-active {
         background-color: $task-edit-bg;
+    }
+
+    //Task labels
+    .task-item-container:first-of-type {
+        margin-top: 30px;
+    }
+    .task-priority, .task-date, .task-title  {
+        position: relative;
+    }
+    .task-item-container:first-of-type .task-priority::before {
+        content: "Priority";
+        position: absolute;
+        bottom: 100%;
+        right: 0;
+        transform: translate(0, -5px);
+    }
+    .task-item-container:first-of-type .task-date::before {
+        content: "Due Date";
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        transform: translate(0, -5px);
+    }
+    .task-item-container:first-of-type .task-title::before {
+        content: "Task";
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        transform: translate(0, -5px);
     }
 }
 
