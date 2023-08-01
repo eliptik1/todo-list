@@ -1,21 +1,28 @@
 //page component colors
-$header: rgb(158, 173, 240);
+$header: rgb(184 192 226);
 $left-panel: rgb(241, 244, 246);
 $right-panel: rgb(255, 255, 255);
-$footer: rgb(94, 109, 152);
+$footer: rgb(205 209 229);
 
 //text colors
 $dark: rgb(32, 32, 32);
 $dark-opacity: rgba(32, 32, 32, 0.4);
 $gray: rgb(136, 136, 136);
+$header-text: rgb(30, 61, 93);
+
+//shadows
+$shadow:rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 
 //button colors
-$task-bg: rgb(195, 221, 255);
-$task-bg-checked: rgba(195, 221, 255, 0.35);
+$task-bg: rgb(252, 252, 252);
+$task-bg-checked: rgba(195, 203, 216, 0.35);
 $nav-hover-bg: rgb(217, 220, 227);
 $nav-active-bg: rgb(217, 220, 227);
-$task-edit-bg: rgb(132, 185, 255);
+$task-edit-bg: rgb(188, 207, 233);
 $project-edit-bg: rgb(217, 220, 227);
+$form-button: rgb(99, 116, 158);
+$form-button-hover: rgb(99, 116, 158);
+$form-button-hover: rgb(74, 88, 126);
 
 //checkbox colors
 $border-none: rgb(121, 121, 121);
@@ -32,7 +39,7 @@ $bg-medium-checked: rgb(255, 229, 190);
 $bg-high-checked: rgb(253, 207, 207);
 
 //Modal screen colors
-$modal-bg: rgb(243, 250, 255);
+$modal-bg: rgb(236 236 236);
 $modal-header: rgb(164, 169, 183);
 $modal-title: rgb(29, 29, 29);
 $modal-text: rgb(32, 45, 63);
@@ -42,7 +49,6 @@ $modal-overlay: rgba(0, 0, 0, 0.5);
     margin: 0;
 	padding: 0;
     box-sizing: border-box;
-    //font-family: 'Montserrat', sans-serif;
     font-family: 'Roboto', sans-serif;
     color: $dark;
 }
@@ -50,8 +56,18 @@ body {
     overflow-x: hidden;
 }
 header {
+    display: flex;
+    align-items: center;
     background-color: $header;
-    padding: 2rem;
+    padding: 1rem 2rem;
+    h1 {
+        font-family: 'Alata', sans-serif;
+        color: $header-text;
+    }
+    img { 
+        width: 40px;
+        margin-right: 0.4rem;
+    }
 }
 #content {
     height: 100vh;
@@ -69,6 +85,7 @@ button:not(form button){
     border: none;
     background: none;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 img {
     width: 23px;
@@ -90,7 +107,7 @@ img {
     display: flex;
     align-items: center;
 }
-.active {
+.left-panel .active {
     background-color: $nav-active-bg;
     border-radius: 5px;
 }
@@ -104,6 +121,13 @@ form + button:hover {
     img {
         margin-right: 0.3rem;
     }
+}
+
+//Left panel container
+.left-panel-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 //Left panel
 .left-panel {
@@ -162,7 +186,9 @@ form + button:hover {
     display: flex;
     flex-direction: column;
     flex: 1;
-    height: 100%;
+    max-width: 900px;
+    margin-left: 5%;
+    margin-top: 4rem;
     padding: 20px;
     background-color: $right-panel;
     .title-container {
@@ -186,8 +212,8 @@ form + button:hover {
         align-items: flex-start;
         background-color: $task-bg;
         border-radius: 5px;
-        margin-bottom: 0.3rem;
-        
+        margin-bottom: 0.5rem;
+        box-shadow: $shadow;
         .task-title {
             margin-right: 2rem;
         }
@@ -333,7 +359,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 0.3rem;
     background-color: $footer;
 }
 
@@ -349,15 +375,50 @@ footer {
     width: min(90%, 350px);
     font-size: 1rem;
     font-weight: 600;
+    box-shadow: $shadow;
 }
 .modal.active {
     transform: translate(-50%, -50%) scale(1);
 }
 .modal h3 {
-    padding: 1rem;
+    padding: 0.7rem 1rem;
     color: $modal-title;
     background-color: $modal-header;
 }
+#edit-task-form, #edit-project-form,#project-form, #task-form {
+    padding: 1rem;
+    input, select {
+        box-shadow: $shadow;
+        border: 1px solid $modal-header;
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        margin-top: 0.25rem;
+        background-color: white;
+    }
+    button {
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: white;
+        background-color: $form-button;
+        border: none;
+        border-radius: 3px;
+        padding: 0.2rem 0.6rem;
+        margin-left: auto;
+    }
+    button:hover {
+        background-color: $form-button-hover;
+    }
+}
+#project-form {
+    background-color: $task-bg-checked;
+    padding: 1rem 1rem;
+}
+#task-form {
+    padding: 1rem 1rem;
+    background-color: rgba($task-bg-checked, 0.25);
+}
+
 #overlay {
     transition: z-index 1s ease;
     position: fixed;
