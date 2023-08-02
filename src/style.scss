@@ -71,12 +71,10 @@ header {
 }
 #content {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 10fr 2rem;
     main {
         display: flex;
-        height: 100%;
     }
 }
 button:not(form button){
@@ -127,7 +125,6 @@ form + button:hover {
 .left-panel-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 //Left panel
 .left-panel {
