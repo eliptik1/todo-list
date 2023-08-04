@@ -13,11 +13,20 @@
 </head>
 <body>
     <div id="content">
-        
+        <header>
+            <label id="hamburger-menu" class="burger" for="burger">
+                <input type="checkbox" id="burger">
+                <img id="burger-open" src="./assets/hamburger.svg" alt="open-menu">
+                <img id="burger-close" src="./assets/remove.svg" alt="close-menu">
+            </label>
+            <div class="logo-container">
+                <img id="logo" src="./assets/logo.svg" alt="Logo">
+                <h1>TODO</h1>
+            </div>
+        </header>
         <main>
-        <div class="left-panel-container">
-            <header><img id="logo" src="./assets/logo.svg" alt="Logo"><h1>TODO</h1></header>
-            <nav class="left-panel">
+            <div class="left-panel-container">
+                <nav class="left-panel">
                 <div class="home">
                     <h3>Home</h3>
                     <button id="all-btn" class="nav-btn"><img id="stack" src="./assets/stack.svg" alt="All-tasks"><div >All tasks</div></button> 
@@ -60,7 +69,7 @@
         <footer>
             Copyright &copy 2023 eliptik1 &nbsp
             <a href="https://github.com/eliptik1">
-                <i class="fa fa-github" style="font-size:26px; color: rgb(0, 0, 0)"></i>
+                <i class="fa fa-github" style="font-size:22px; color: rgb(37, 47, 67)"></i>
             </a>
         </footer>
         
@@ -89,6 +98,8 @@
             </form>
         </div>
         <div id="overlay"></div>
+        <div id="menu-overlay"></div>
+        
     </div>
     
     <script src="main.js"></script>
