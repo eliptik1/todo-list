@@ -61,7 +61,7 @@ function renderProjects(){
         </div>`
     }
     //Remove projects
-    const projectRemoveButtons = document.querySelectorAll(".remove-btn")
+    const projectRemoveButtons = document.querySelectorAll(".project-btn .remove-btn")
     projectRemoveButtons.forEach((btn, index) => {
         btn.addEventListener("click", (e)=>{
             projects.removeProject(index)
@@ -167,7 +167,7 @@ function renderTasks(projectIndex){
         render(projects.projectList[projectIndex].tasks)
     }
     //Remove tasks
-    const taskRemoveButtons = document.querySelectorAll(".remove-task-btn")
+    const taskRemoveButtons = document.querySelectorAll(".task-btns-container .remove-task-btn")
     taskRemoveButtons.forEach( btn => {
         btn.addEventListener("click", (e)=>{
             let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".task-item-container"
