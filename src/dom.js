@@ -147,9 +147,10 @@ function renderTasks(projectIndex){
                 <div class="task-btns-container">
                     <div class="task-priority">${tabArray[i].priority}</div>
                     <div class="task-date">${tabArray[i].date}</div>
-                    
-                    <button class="task-edit-btn edit-btn"><img src="./assets/edit.svg"></button>
-                    <button class="remove-task-btn remove-btn"><img src="./assets/remove.svg"></button>
+                    <div class="edit-container">
+                        <button class="task-edit-btn edit-btn"><img src="./assets/edit.svg"></button>
+                        <button class="remove-task-btn remove-btn"><img src="./assets/remove.svg"></button>
+                    <div>
                 </div>
             </div>`
         }
@@ -357,6 +358,35 @@ function modalOff(){
 
 const modal = document.querySelector(".modal")
 const overlay = document.querySelector("#overlay")
+const menuOverlay = document.querySelector("#menu-overlay")
+
+//Hamburger menu
+const hamburgerMenu = document.querySelector("#burger")
+const menuContainer = document.querySelector(".left-panel-container")
+
+hamburgerMenu.addEventListener("click", (e) => {
+    if(e.target.checked == true) {
+        menuContainer.classList.add("active"); 
+        menuOn()
+    } else {
+        menuOff()
+    }
+})
+
+function menuOn(){
+    menuOverlay.classList.add("active")
+    hamburgerMenu.checked
+    menuOverlay.addEventListener("click", closeMenu)
+}
+function menuOff(){
+    menuOverlay.classList.remove("active")
+    menuContainer.classList.remove("active")
+}
+function closeMenu() {
+    menuOverlay.removeEventListener("click", closeMenu); // Remove the event listener after the menu is closed
+    hamburgerMenu.checked = false
+    menuOff();
+}
 
 renderProjects() //Display the default projects in the projectList array when the page loads
 selectProject(0) //Select the first project if exists when the page loads
