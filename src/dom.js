@@ -68,6 +68,7 @@ function renderProjects(){
             let projectListItem = e.target.closest(".project-btn") // Find the btn's container element: ".project-btn"
             projectListItem.remove()
             renderProjects()
+            saveToLocalStorage();
             if(selectedProjectIndex === "allTasks") {
                 renderTasks("allTasks")
             } else if(selectedProjectIndex === "today") {
@@ -179,6 +180,7 @@ function renderTasks(projectIndex){
                 renderTasks(selectedProjectIndex)
             }
             projectListItem2.remove()
+            saveToLocalStorage();
         })
     })
     //Edit task
@@ -206,6 +208,7 @@ function renderTasks(projectIndex){
             let taskListItem = e.target.closest(".task-item-container")
             projects.checkTask(taskListItem.dataset.parentProjectIndex, taskListItem.dataset.taskIndex)
             renderTasks(selectedProjectIndex)
+            saveToLocalStorage();
         })
     })
 }
@@ -246,6 +249,7 @@ taskForm.addEventListener("submit", (e)=> {
     taskForm.reset()
     hideTaskForm();
     renderProjects()
+    saveToLocalStorage();
     renderTasks(selectedProjectIndex)
 })
 
@@ -278,6 +282,7 @@ projectForm.addEventListener("submit", (e)=> {
     projectTitleInput.value = ""
     hideProjectForm();
     renderProjects()
+    saveToLocalStorage()
     renderTasks(selectedProjectIndex)
     selectProject(selectedProjectIndex)
 })
@@ -293,6 +298,7 @@ editProjectForm.addEventListener("submit", (e)=> {
     if(selectedItem) {
         projects.editProject(selectedItem.dataset.projectIndex, projectEditTitleInput.value)
         renderProjects()
+        saveToLocalStorage();
         renderTasks(selectedProjectIndex)
         projectEditTitleInput.value = ""
     }
@@ -322,6 +328,7 @@ editTaskForm.addEventListener("submit", (e)=> {
     if(selectedItem) {
         projects.editTask(selectedItem.dataset.parentProjectIndex, selectedItem.dataset.taskIndex, taskEditTitleInput.value, newDate, priorityEditInput.value)
         renderProjects()
+        saveToLocalStorage();
         renderTasks(selectedProjectIndex)
     }
     editTaskForm.classList.add("hidden")
@@ -386,6 +393,21 @@ function closeMenu() {
     menuOverlay.removeEventListener("click", closeMenu); // Remove the event listener after the menu is closed
     hamburgerMenu.checked = false
     menuOff();
+}
+
+//Local storage
+if(!localStorage.getItem("todoList")) {
+    saveToLocalStorage();
+} else {
+    loadFromLocalStorage();
+}
+function saveToLocalStorage() {
+    localStorage.setItem("todoList", JSON.stringify(projects.projectList));
+    loadFromLocalStorage();
+}
+function loadFromLocalStorage() {
+    let storedProjectList = JSON.parse(localStorage.getItem("todoList"))
+    projects.projectList = storedProjectList;
 }
 
 renderProjects() //Display the default projects in the projectList array when the page loads

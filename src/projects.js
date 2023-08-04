@@ -72,6 +72,13 @@ export const projects = (() => {
     let getWeekTasks = () => {
         return getAllTasks().filter(task => isThisWeek(parseISO(task.date)))
     }
+
+    let getProjectList = () => {
+        return projectList
+    }
+    let setProjectList = (newList) => {
+        projectList = newList;
+    }
     
     //Date variables
     const date = new Date()
@@ -79,7 +86,8 @@ export const projects = (() => {
 
     return {
         myProject,
-        projectList,
+        get projectList() { return getProjectList() },
+        set projectList(newList) { setProjectList(newList) },
         get allTasks() { return getAllTasks() },
         get todayTasks() { return getTodayTasks() },
         get weekTasks() { return getWeekTasks() },
