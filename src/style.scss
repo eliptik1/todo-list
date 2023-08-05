@@ -236,6 +236,9 @@ form + button:hover {
             word-wrap: break-word;
             word-break: break-word;
         }
+        .parent-title {
+            color: rgba($gray, 0.9);
+        }
         .task-btns-container {
             display: flex;
             .task-date {

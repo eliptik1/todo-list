@@ -164,6 +164,7 @@ function renderProjects(){
 function renderTasks(projectIndex){
     const taskContainer = document.querySelector(".task-list")
     taskContainer.innerHTML = "" // clear existing tasks display when calling the function more than once
+
     if(projects.projectList.length === 0) return //if all projects were removed, then don't try to iterate over non-existent tasks
     function render(tabArray){
         for(let i=0; i < tabArray.length; i++){
@@ -173,7 +174,9 @@ function renderTasks(projectIndex){
             data-task-index = ${tabArray[i].taskIndex}>
                 <div class="checkbox-container">
                     <input type="checkbox" class="task-checkbox ${tabArray[i].priority}" name="check" ${tabArray[i].checked ? "checked" : ""}>
-                    <div class="task-title"> ${tabArray[i].title}</div>
+                    <div class="task-title"> ${tabArray[i].title}<br>
+                    <span class="parent-title">(${projects.projectList[tabArray[i].parentProjectIndex].title})</span>
+                    </div>
                 </div>
                 <div class="task-btns-container">
                     <div class="task-priority">${tabArray[i].priority}</div>
@@ -184,6 +187,17 @@ function renderTasks(projectIndex){
                     <div>
                 </div>
             </div>`
+            
+            //Display parent projects' titles along with the tasks when rendering Home tabs
+            const parentTitles = document.querySelectorAll(".parent-title");
+            for (const parentTitle of parentTitles) {
+                if (projects.projectList.length !== 0 && Number.isInteger(projectIndex)) {
+                // If projects exist and projectIndex is a valid integer
+                parentTitle.classList.add("hidden");
+                } else {
+                parentTitle.classList.remove("hidden");
+                }
+            }
         }
     }
     //If "All tasks" are selected, render all tasks with data attributes to keep the tasks' order when deleting them.
