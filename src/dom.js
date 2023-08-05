@@ -115,6 +115,7 @@ function renderProjects(){
         btn.addEventListener("click", (e)=>{
             editProjectForm.classList.add("hidden")
             editTaskForm.classList.add("hidden")
+            deleteTaskForm.classList.add("hidden")
             deleteProjectForm.classList.remove("hidden")
             modalOn()
             modalTitle.textContent = "Delete Project"
@@ -147,6 +148,7 @@ function renderProjects(){
             editProjectForm.classList.remove("hidden")
             editTaskForm.classList.add("hidden")
             deleteProjectForm.classList.add("hidden")
+            deleteTaskForm.classList.add("hidden")
             let projectListItem = e.target.closest(".project-btn")
             projectListItem.classList.add("edit-active")
             projectEditTitleInput.value = projects.projectList[index].title
@@ -199,16 +201,27 @@ function renderTasks(projectIndex){
     const taskRemoveButtons = document.querySelectorAll(".task-btns-container .remove-task-btn")
     taskRemoveButtons.forEach( btn => {
         btn.addEventListener("click", (e)=>{
-            let projectListItem2 = e.target.closest(".task-item-container") // Find the btn's container element: ".task-item-container"
-            //use data attributes to modify the projectList. 
-            projects.removeTask(projectListItem2.dataset.taskIndex, projectListItem2.dataset.parentProjectIndex) 
-            if(projectIndex === "allTasks") { 
-                renderTasks("allTasks")
-            } else {
-                renderTasks(selectedProjectIndex)
+            editProjectForm.classList.add("hidden")
+            editTaskForm.classList.add("hidden")
+            deleteProjectForm.classList.add("hidden")
+            deleteTaskForm.classList.remove("hidden")
+            modalOn()
+            modalTitle.textContent = "Delete Task"
+            let taskListItem = e.target.closest(".task-item-container")
+            taskListItem.classList.add("edit-active")
+            deleteTaskModalTitle.textContent = `'${projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title}'`
+            deleteTaskForm.onsubmit = () => {
+                //use data attributes to modify the projectList. 
+                projects.removeTask(taskListItem.dataset.taskIndex, taskListItem.dataset.parentProjectIndex) 
+                if(projectIndex === "allTasks") { 
+                    renderTasks("allTasks")
+                } else {
+                    renderTasks(selectedProjectIndex)
+                }
+                taskListItem.remove()
+                saveToLocalStorage();
             }
-            projectListItem2.remove()
-            saveToLocalStorage();
+            e.stopPropagation(); 
         })
     })
     //Edit task
@@ -216,6 +229,7 @@ function renderTasks(projectIndex){
     editTaskButtons.forEach(btn=> {
         btn.addEventListener("click", (e) => {
             editTaskForm.classList.remove("hidden")
+            deleteTaskForm.classList.add("hidden")
             let taskListItem = e.target.closest(".task-item-container")
             taskListItem.classList.add("edit-active")
             taskEditTitleInput.value = projects.projectList[taskListItem.dataset.parentProjectIndex].tasks[taskListItem.dataset.taskIndex].title
@@ -331,6 +345,7 @@ editProjectForm.addEventListener("submit", (e)=> {
         projectEditTitleInput.value = ""
     }
     editProjectForm.classList.add("hidden")
+    deleteTaskForm.classList.add("hidden")
     modalOff()
 })
 cancelBtn.addEventListener("click", (e) => {
@@ -374,7 +389,7 @@ taskCancelBtn.addEventListener("click", (e) => {
 //Delete project form
 const deleteProjectForm = document.querySelector("#delete-project-form")
 const deleteProjectModalTitle = document.querySelector("#delete-project-form span")
-const cancelDeleteBtn = document.querySelector("#form-delete-cancel")
+const cancelDeleteBtn = document.querySelector("#form-delete-project-cancel")
 deleteProjectForm.classList.add("hidden")
 deleteProjectForm.addEventListener("submit", (e)=> {
     e.preventDefault()
@@ -397,6 +412,23 @@ cancelDeleteBtn.addEventListener("click", (e) => {
     modalOff()
 })
 
+//Delete task form
+const deleteTaskForm = document.querySelector("#delete-task-form")
+const deleteTaskModalTitle = document.querySelector("#delete-task-form span")
+const cancelDeleteTaskBtn = document.querySelector("#form-delete-task-cancel")
+deleteTaskForm.classList.add("hidden")
+deleteTaskForm.addEventListener("submit", (e)=> {
+    e.preventDefault()
+    editTaskForm.classList.add("hidden")
+    modalOff()
+})
+
+cancelDeleteTaskBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    editTaskForm.classList.add("hidden")
+    modalOff()
+})
+
 //Modal window
 const modalTitle = document.querySelector("#modal-title")
 function modalOn(){
@@ -412,6 +444,7 @@ function modalOff(){
     editProjectForm.classList.add("hidden")
     editTaskForm.classList.add("hidden")
     deleteProjectForm.classList.add("hidden")
+    deleteTaskForm.classList.add("hidden")
     const projectListItems = document.querySelectorAll(".project-btn")
     const taskListItems = document.querySelectorAll(".task-item-container")
     projectListItems.forEach(item => item.classList.remove("edit-active"))
