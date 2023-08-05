@@ -23,6 +23,8 @@ $project-edit-bg: rgb(217, 220, 227);
 $form-button: rgb(99, 116, 158);
 $form-button-hover: rgb(99, 116, 158);
 $form-button-hover: rgb(74, 88, 126);
+$form-button-delete: rgb(220, 48, 48);
+$form-button-delete-hover: rgb(182, 31, 31);
 
 //checkbox colors
 $border-none: rgb(121, 121, 121);
@@ -406,8 +408,14 @@ footer {
     color: $modal-title;
     background-color: $modal-header;
 }
-#edit-task-form, #edit-project-form,#project-form, #task-form {
+#edit-task-form, #edit-project-form,#project-form, #task-form, #delete-project-form {
     padding: 1rem;
+    p {
+        font-weight: 400;
+        span {
+            font-weight: 700;
+        }
+    }
     input, select {
         box-shadow: $shadow;
         border: 1px solid $modal-header;
@@ -429,6 +437,12 @@ footer {
     }
     button:hover {
         background-color: $form-button-hover;
+    }
+    #form-btn-delete {
+        background-color: $form-button-delete;
+    }
+    #form-btn-delete:hover {
+        background-color: $form-button-delete-hover;
     }
 }
 #project-form {
