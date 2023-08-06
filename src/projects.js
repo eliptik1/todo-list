@@ -1,5 +1,5 @@
 import { Task } from "./task";
-import { format, isThisWeek, parseISO } from "date-fns"
+import { format, isThisWeek, add, parseISO } from "date-fns"
 
 export const projects = (() => {
 
@@ -83,9 +83,14 @@ export const projects = (() => {
     //Date variables
     const date = new Date()
     const today = format(date, 'yyyy-MM-dd')
+    const tomorrow = format(add(new Date(), {days:1}), "yyyy-MM-dd")
+    const nextWeek = format(add(new Date(), {weeks:1}), "yyyy-MM-dd")
 
     return {
         myProject,
+        today,
+        tomorrow,
+        nextWeek,
         get projectList() { return getProjectList() },
         set projectList(newList) { setProjectList(newList) },
         get allTasks() { return getAllTasks() },

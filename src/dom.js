@@ -272,6 +272,9 @@ function renderTasks(projectIndex){
 //Add new task form
 const titleInput = document.querySelector("#title")
 const dateInput = document.querySelector("#date")
+const dateToday = document.querySelector("#date-today")
+const dateTomorrow = document.querySelector("#date-tomorrow")
+const dateNextWeek = document.querySelector("#date-next-week")
 const taskForm = document.querySelector("#task-form")
 const prioritySelection = document.querySelector("#priority") 
 const openTaskFormBtn = document.querySelector("#open-task-form")
@@ -294,6 +297,19 @@ document.addEventListener('mousedown', (e) => {
         hideTaskForm();
     }
 });
+//Choose date with buttons
+dateToday.addEventListener("click", (e)=> {
+    e.preventDefault()
+    dateInput.value = projects.today
+})
+dateTomorrow.addEventListener("click", (e)=> {
+    e.preventDefault()
+    dateInput.value = projects.tomorrow
+})
+dateNextWeek.addEventListener("click", (e)=> {
+    e.preventDefault()
+    dateInput.value = projects.nextWeek
+})
 taskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     //if user doesn't specify a date, set it to "no date", else, use the dateInput's value
@@ -377,6 +393,9 @@ const taskEditTitleInput = document.querySelector("#edit-task-title")
 const taskEditDateInput = document.querySelector("#edit-date")
 const taskCancelBtn = document.querySelector("#task-form-btn-cancel")
 const priorityEditInput = document.querySelector("#edit-priority")
+const taskEditDateToday = document.querySelector("#edit-date-today")
+const taskEditDateTomorrow = document.querySelector("#edit-date-tomorrow")
+const taskEditDateNextWeek = document.querySelector("#edit-date-next-week")
 editTaskForm.addEventListener("submit", (e)=> {
     e.preventDefault()
     let newDate = taskEditDateInput.value;
@@ -398,6 +417,19 @@ taskCancelBtn.addEventListener("click", (e) => {
     taskListItems.forEach(item => item.classList.remove("edit-active"))
     editTaskForm.classList.add("hidden")
     modalOff()
+})
+//Choose date with buttons
+taskEditDateToday.addEventListener("click", (e)=> {
+    e.preventDefault()
+    taskEditDateInput.value = projects.today
+})
+taskEditDateTomorrow.addEventListener("click", (e)=> {
+    e.preventDefault()
+    taskEditDateInput.value = projects.tomorrow
+})
+taskEditDateNextWeek.addEventListener("click", (e)=> {
+    e.preventDefault()
+    taskEditDateInput.value = projects.nextWeek
 })
 
 //Delete project form

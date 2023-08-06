@@ -25,6 +25,12 @@ $form-button-hover: rgb(99, 116, 158);
 $form-button-hover: rgb(74, 88, 126);
 $form-button-delete: rgb(220, 48, 48);
 $form-button-delete-hover: rgb(182, 31, 31);
+$form-button-today: rgba(253, 166, 5, 0.4);
+$form-button-tomorrow: rgba(251, 69, 72, 0.25) ;
+$form-button-next-week: rgba(54, 147, 136, 0.25);
+$form-button-today-hover: rgba(253, 166, 5, 0.6);
+$form-button-tomorrow-hover: rgba(251, 69, 72, 0.4) ;
+$form-button-next-week-hover: rgba(54, 147, 136, 0.45);
 
 //checkbox colors
 $border-none: rgb(121, 121, 121);
@@ -452,10 +458,36 @@ footer {
     background-color: $task-bg-checked;
     padding: 1rem 1rem;
 }
+@mixin date-buttons {
+    .date-buttons {
+        display: flex;
+        gap: 0.5rem;
+        button {
+        flex: 1;
+        color: $dark;
+        }
+        #date-today, #edit-date-today {
+            background-color: $form-button-today;
+            &:hover { background-color: $form-button-today-hover; }
+        }
+        #date-tomorrow, #edit-date-tomorrow {
+            background-color: $form-button-tomorrow;
+            &:hover { background-color: $form-button-tomorrow-hover; }
+        }
+        #date-next-week, #edit-date-next-week {
+            background-color: $form-button-next-week;
+            &:hover { background-color: $form-button-next-week-hover; }
+        }
+    }
+}
 #task-form {
     margin-top: 1rem;
     padding: 1rem 1rem;
     background-color: rgba($task-bg-checked, 0.25);
+    @include date-buttons;
+}
+#edit-task-form {
+    @include date-buttons;
 }
 
 #overlay, #menu-overlay {
