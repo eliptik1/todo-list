@@ -47,15 +47,24 @@ export const projects = (() => {
         }
     }
 
+    //Date variables
+    const date = new Date()
+    const today = format(date, 'yyyy-MM-dd')
+    const tomorrow = format(add(new Date(), {days:1}), "yyyy-MM-dd")
+    const nextWeek = format(add(new Date(), {weeks:1}), "yyyy-MM-dd")
+
     //Default projects and tasks
-    let projectList = [new Project("first-project"), new Project("second-project"), new Project("third-project"),new Project("fourth-project")];
+    let projectList = [new Project("Personal"), new Project("Shopping"), new Project("Study"),new Project("Health")];
     const myProject = new Project()
     
-    projectList[0].tasks.push(new Task("first", "2023-07-24", "low"))
-    projectList[0].tasks.push(new Task("first-2", "2023-07-20", "high"))
-    projectList[1].tasks.push(new Task("second", "2023-07-23"))
-    projectList[2].tasks.push(new Task("third", "2023-07-22", "medium"))
-    projectList[3].tasks.push(new Task("fourth", "2023-07-21", "low"))
+    projectList[0].tasks.push(new Task("Organize and clean the desk", today, "medium"))
+    projectList[0].tasks.push(new Task("Schedule a haircut appointment", nextWeek, "low"))
+    projectList[1].tasks.push(new Task("Buy groceries for the week.", tomorrow, "high"))
+    projectList[1].tasks.push(new Task("Purchase a new pair of shoes.", format(add(new Date(), {days:8}), "yyyy-MM-dd"), "low"))
+    projectList[2].tasks.push(new Task("Review notes for the upcoming exam", format(add(new Date(), {days:10}), "yyyy-MM-dd"), "-"))
+    projectList[3].tasks.push(new Task("Go for a 30-minute jog in the park", "no date", "medium"))
+    projectList[3].tasks.push(new Task("Research and sign up for a fitness class", nextWeek, "high"))
+    
     //Assign each task their parent project's index & task index
     projectList.forEach((project, index) => project.tasks.forEach(task => { task["parentProjectIndex"] = index }))
     projectList.forEach(project => project.tasks.forEach((task, index) => { task["taskIndex"] = index }))
@@ -79,12 +88,6 @@ export const projects = (() => {
     let setProjectList = (newList) => {
         projectList = newList;
     }
-    
-    //Date variables
-    const date = new Date()
-    const today = format(date, 'yyyy-MM-dd')
-    const tomorrow = format(add(new Date(), {days:1}), "yyyy-MM-dd")
-    const nextWeek = format(add(new Date(), {weeks:1}), "yyyy-MM-dd")
 
     return {
         myProject,
