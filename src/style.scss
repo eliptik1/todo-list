@@ -16,6 +16,7 @@ $shadow:rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3p
 //button colors
 $task-bg: rgb(252, 252, 252);
 $task-bg-checked: rgba(195, 203, 216, 0.35);
+$task-bg-outdated: rgb(255, 233, 233);
 $nav-hover-bg: rgb(217, 220, 227);
 $nav-active-bg: rgb(217, 220, 227);
 $task-edit-bg: rgb(188, 207, 233);
@@ -350,6 +351,12 @@ form + button:hover {
     .task-priority, .task-date, .task-title  {
         position: relative;
         padding-top: 0.25rem;
+    }
+    .task-date.outdated {
+        color: $border-high;
+    }
+    .task-item-container:not(.checked):has(.task-date.outdated) {
+        background-color: $task-bg-outdated;
     }
     
     @mixin before-pseudo-style {

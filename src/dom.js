@@ -1,4 +1,6 @@
 import { projects } from "./projects"
+import { format } from "date-fns"
+
 const projectTitle = document.querySelector(".project-title")
 const titleIcon = document.querySelector("#title-icon")
 
@@ -160,7 +162,7 @@ function renderProjects(){
         })
     })
 } 
-
+const today = format(new Date(), 'yyyy-MM-dd')
 function renderTasks(projectIndex){
     const taskContainer = document.querySelector(".task-list")
     taskContainer.innerHTML = "" // clear existing tasks display when calling the function more than once
@@ -180,7 +182,7 @@ function renderTasks(projectIndex){
                 </div>
                 <div class="task-btns-container">
                     <div class="task-priority">${tabArray[i].priority}</div>
-                    <div class="task-date">${tabArray[i].date}</div>
+                    <div class="task-date ${tabArray[i].date < today ? "outdated" : ""}">${tabArray[i].date}</div>
                     <div class="edit-container">
                         <button class="task-edit-btn edit-btn"><img src="./assets/edit.svg"></button>
                         <button class="remove-task-btn remove-btn"><img src="./assets/remove.svg"></button>
