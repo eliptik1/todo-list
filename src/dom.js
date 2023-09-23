@@ -1,5 +1,5 @@
 import { projects } from "./projects"
-import { format } from "date-fns"
+import { format, parseISO, isThisYear } from "date-fns"
 
 const projectTitle = document.querySelector(".project-title")
 const titleIcon = document.querySelector("#title-icon")
@@ -182,7 +182,19 @@ function renderTasks(projectIndex){
                 </div>
                 <div class="task-btns-container">
                     <div class="task-priority">${tabArray[i].priority}</div>
-                    <div class="task-date ${tabArray[i].date < today ? "outdated" : ""}">${tabArray[i].date}</div>
+                    <div class="task-date ${tabArray[i].date < today ? "outdated" : ""}">
+                    ${
+                        (()=> {
+                        if(tabArray[i].date !=="no date" && !isThisYear(parseISO(tabArray[i].date))){
+                            return format(parseISO(tabArray[i].date), 'd MMM yyyy');
+                        } else if(isThisYear(parseISO(tabArray[i].date))) { 
+                            return format(parseISO(tabArray[i].date), 'd MMM');
+                        } else {
+                            return "no date"
+                        }
+                        })()
+                    }
+                    </div>
                     <div class="edit-container">
                         <button class="task-edit-btn edit-btn"><img src="./assets/edit.svg"></button>
                         <button class="remove-task-btn remove-btn"><img src="./assets/remove.svg"></button>
